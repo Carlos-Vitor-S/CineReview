@@ -1,0 +1,19 @@
+<p-carousel
+  [value]="posters"
+  [numVisible]="3"
+  [circular]="false"
+  [autoplayInterval]="3000"
+  [responsiveOptions]="responsiveOptions"
+>
+  <ng-template let-poster pTemplate="item">
+    <div class="posterContainer">
+      <img src="{{ poster.poster_path }}" alt="" />
+      <div class="ratingContainer">
+        <span class="ratingContent">
+          <i class="pi pi-star-fill" style="color: var(--darkPrimaryColor)"></i
+          >{{ poster.vote_average }}</span
+        >
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>

@@ -1,3 +1,15 @@
 <div class="nabBarContainer">
-  <p-button label="Entrar" class="botao"></p-button>
+  <span>MyApp</span>
+  <span class="actionsContainer">
+    <div class="createAccountAction">Criar</div>
+    <div class="loginButtonAction">
+      <p-button
+        label="Entrar"
+        [raised]="true"
+        severity="warning"
+        class="loginButton"
+        size="small"
+      ></p-button>
+    </div>
+  </span>
 </div>

@@ -1,3 +1,24 @@
-.botao {
-  color: purple;
+.nabBarContainer {
+  background-color: var(--lightBackgroundColor);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem;
+}
+
+.actionsContainer {
+  display: flex;
+  align-items: center;
+}
+
+.createAccountAction {
+  margin-right: 0.8rem;
+}
+
+.loginButtonAction {
+  border-left: 0.1rem solid gray;
+}
+
+.loginButton {
+  margin-left: 0.8rem;
 }

@@ -1,0 +1,31 @@
+.cardContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.cardContent {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border: 0.13rem solid darkslategrey;
+  border-radius: 0.2rem;
+}
+
+.cardContainer img {
+  width: 100%;
+  height: fit-content;
+}
+
+.cardDescription {
+  background-color: var(--lighterBackgroundColor);
+  padding: 1rem;
+  display: flex;
+
+  flex-direction: column;
+}
+
+.cardTitle {
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+}
