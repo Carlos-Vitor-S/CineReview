@@ -1,4 +1,4 @@
 export enum ProductionEnum {
-  series = 'series',
+  day = 'series',
   movie = 'movie',
 }

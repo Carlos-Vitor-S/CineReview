@@ -1,12 +1,25 @@
-<div class="cardContainer">
-  <div class="cardContent">
-    <img src="{{ poster_path }}" alt="" />
-    <div class="cardDescription">
-      <span class="cardTitle">The Walking Dead</span>
-      <span
-        >8.9
-        <i class="pi pi-star-fill" style="color: var(--darkPrimaryColor)"></i
-      ></span>
+<p-carousel
+  [value]="productions"
+  [numVisible]="3"
+  [circular]="false"
+  [autoplayInterval]="3000"
+  [responsiveOptions]="responsiveOptions"
+  [showIndicators]="false"
+>
+  <ng-template pTemplate="header">
+    <span class="headerContainer">
+      <span class="headerTitle">{{ cardTitle }}</span>
+    </span>
+  </ng-template>
+  <ng-template let-production pTemplate="item">
+    <div class="posterContainer">
+      <img src="{{ production.backdrop_path }}" alt="" />
+      <div class="ratingContainer">
+        <span class="ratingContent">
+          <i class="pi pi-star-fill" style="color: var(--darkPrimaryColor)"></i
+          >{{ production.vote_average }}</span
+        >
+      </div>
     </div>
-  </div>
-</div>
+  </ng-template>
+</p-carousel>

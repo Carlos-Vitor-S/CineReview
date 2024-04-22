@@ -1,9 +1,11 @@
+//Content
 .posterContainer {
   display: inline-flex;
-  margin: 1rem;
+  margin: 1.5rem;
+
   position: relative;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
+  transition: transform 0.3s ease-in-out;
   border-radius: 0.8rem;
 }
 
@@ -18,7 +20,6 @@
   bottom: 0;
   right: 0;
   background-color: var(--lighterBackgroundColor);
-
   font-size: 0.9rem;
   padding: 0.5rem;
   border-top-left-radius: 0.3rem;
@@ -35,4 +36,9 @@
 .ratingContent i {
   font-size: 0.7;
   margin-right: 0.2rem;
+}
+
+.posterContainer:hover {
+  cursor: pointer;
+  transform: scale(1.1);
 }

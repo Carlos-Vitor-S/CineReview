@@ -22,3 +22,13 @@
 .loginButton {
   margin-left: 0.8rem;
 }
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+img {
+  width: 100%;
+  height: fit-content;
+}

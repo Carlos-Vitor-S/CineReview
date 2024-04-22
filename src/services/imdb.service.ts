@@ -8,18 +8,35 @@ import { Production } from '../interfaces/production';
   providedIn: 'root',
 })
 export class ImdbService {
-  constructor(private httpClient: HttpClient) {}
+  private headers: HttpHeaders;
 
-  private baseUrl: string = environment.baseUrl;
+  constructor(private httpClient: HttpClient) {
+    //header build
+    this.headers = new HttpHeaders()
+      .set('accept', 'application/json')
+      .set('Authorization', `Bearer ${environment.acessToken}`);
+  }
 
   ///Get movies currently on theatres
   getNowPlaying(): Observable<{ results: Production[] }> {
-    const headers = new HttpHeaders()
-      .set('accept', 'application/json')
-      .set('Authorization', `Bearer ${environment.acessToken}`);
     return this.httpClient.get<{ results: Production[] }>(
-      `${this.baseUrl}/movie/now_playing?api_key=${environment.apiKey}&language=pt-BR`,
-      { headers }
+      `${environment.baseUrl}/movie/now_playing?api_key=${environment.apiKey}&language=pt-BR`,
+      { headers: this.headers }
+    );
+  }
+
+  getPopularSeries(): Observable<{ results: Production[] }> {
+    return this.httpClient.get<{ results: Production[] }>(
+      `${environment.baseUrl}/tv/popular?api_key=${environment.apiKey}&language=pt-BR`,
+      { headers: this.headers }
+    );
+  }
+
+  getTrendingMovies(
+    time_window: string
+  ): Observable<{ results: Production[] }> {
+    return this.httpClient.get<{ results: Production[] }>(
+      `${environment.baseUrl}/trending/movie/${time_window}?api_key=${environment.apiKey}&language=pt-BR`
     );
   }
 }

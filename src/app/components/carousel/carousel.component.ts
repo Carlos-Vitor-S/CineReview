@@ -11,7 +11,7 @@ import { Production } from '../../../interfaces/production';
 })
 export class CarouselComponent {
   //@Input() poster: string = '';
-  @Input() backdrop_path: string = '';
+
   @Input() posters: Production[] = [];
   @Input() vote_average: Number = 0;
 

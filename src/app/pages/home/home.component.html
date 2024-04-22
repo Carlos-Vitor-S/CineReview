@@ -1,3 +1,18 @@
 <div class="container">
-  <app-carousel [posters]="moviesNowPlaying"></app-carousel>
+  <div class="sectionContainer">
+    <app-carousel [posters]="moviesNowPlaying"></app-carousel>
+  </div>
+
+  <div class="sectionContainer">
+    <app-card
+      [productions]="popularSeries"
+      [cardTitle]="sectionCategory.category1"
+    ></app-card>
+  </div>
+  <div class="sectionContainer">
+    <app-card
+      [productions]="trendingMovies"
+      [cardTitle]="sectionCategory.category2"
+    ></app-card>
+  </div>
 </div>
