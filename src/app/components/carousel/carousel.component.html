@@ -7,7 +7,7 @@
   class="carousel"
 >
   <ng-template let-poster pTemplate="item">
-    <div class="posterContainer">
+    <div class="posterContainer" (click)="clicar()">
       <img src="{{ poster.poster_path }}" alt="" />
       <div class="ratingContainer">
         <span class="ratingContent">

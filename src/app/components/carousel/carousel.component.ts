@@ -22,6 +22,7 @@ export class CarouselComponent {
       numVisible: 3,
       numScroll: 3,
     },
+
     {
       breakpoint: '768px',
       numVisible: 2,
@@ -33,4 +34,8 @@ export class CarouselComponent {
       numScroll: 1,
     },
   ];
+
+  clicar() {
+    console.log('clicou');
+  }
 }

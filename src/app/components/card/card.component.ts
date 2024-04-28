@@ -1,8 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
 import { Production } from '../../../interfaces/production';
+import { Router } from '@angular/router';
+import { ProductionDetailsService } from '../../../services/production-details.service';
 @Component({
   selector: 'app-card',
   standalone: true,
@@ -13,8 +15,17 @@ import { Production } from '../../../interfaces/production';
 })
 export class CardComponent {
   @Input() productions: Production[] = [];
-  @Input() vote_average: Number = 0;
   @Input() cardTitle: string = '';
+
+  constructor(
+    private router: Router,
+    private productionDetailsService: ProductionDetailsService
+  ) {}
+  //onClick event
+  redirectToProduction(production: Production) {
+    this.router.navigate(['/production', production.id]);
+    this.productionDetailsService.productions$.next([production]);
+  }
   responsiveOptions = [
     {
       breakpoint: '1024px',
@@ -30,6 +41,11 @@ export class CardComponent {
       breakpoint: '560px',
       numVisible: 1,
       numScroll: 1,
+    },
+    {
+      breakpoint: '1200px',
+      numVisible: 4,
+      numScroll: 4,
     },
   ];
 }

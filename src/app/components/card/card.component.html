@@ -12,8 +12,12 @@
     </span>
   </ng-template>
   <ng-template let-production pTemplate="item">
-    <div class="posterContainer">
-      <img src="{{ production.backdrop_path }}" alt="" />
+    <div class="posterContainer" (click)="redirectToProduction(production)">
+      <img
+        src="{{ production.backdrop_path }}"
+        alt="{{ production.title }}"
+        width="300"
+      />
       <div class="ratingContainer">
         <span class="ratingContent">
           <i class="pi pi-star-fill" style="color: var(--darkPrimaryColor)"></i
