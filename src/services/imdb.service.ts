@@ -4,6 +4,9 @@ import { environment } from '../environments/environment.development';
 import { Observable } from 'rxjs';
 import { Production } from '../interfaces/production';
 import { ProductionTypeEnum } from '../enums/productionsTypeEnum';
+import { Trailer } from '../interfaces/trailer';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Genre } from '../interfaces/genre';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +14,10 @@ import { ProductionTypeEnum } from '../enums/productionsTypeEnum';
 export class ImdbService {
   private headers: HttpHeaders;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient,
+    private domSanitizer: DomSanitizer
+  ) {
     //header build
     this.headers = new HttpHeaders()
       .set('accept', 'application/json')
@@ -37,18 +43,25 @@ export class ImdbService {
     time_window: string
   ): Observable<{ results: Production[] }> {
     return this.httpClient.get<{ results: Production[] }>(
-      `${environment.baseUrl}/trending/movie/${time_window}?api_key=${environment.apiKey}&language=pt-BR`
+      `${environment.baseUrl}/trending/movie/${time_window}?api_key=${environment.apiKey}&language=pt-BR`,
+      { headers: this.headers }
     );
   }
 
   getTrailers(
     id: number,
-    type: ProductionTypeEnum
+    productionType: ProductionTypeEnum
   ): Observable<{ results: Production[] }> {
     return this.httpClient.get<{ results: Production[] }>(
-      `${environment.baseUrl}/${type}/${id}/videos?api_key=${environment.apiKey}&language=pt-BR`
+      `${environment.baseUrl}/${productionType}/${id}/videos?api_key=${environment.apiKey}`,
+      { headers: this.headers }
     );
   }
 
-  //get any production by id (Movies and series)
+  getGenre(productionType: ProductionTypeEnum): Observable<Genre> {
+    return this.httpClient.get<Genre>(
+      `${environment.baseUrl}/genre/${productionType}/list?api_key=${environment.apiKey}&language=pt-BR`,
+      { headers: this.headers }
+    );
+  }
 }

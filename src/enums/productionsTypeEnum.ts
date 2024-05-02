@@ -1,4 +1,4 @@
 export enum ProductionTypeEnum {
-  tv = 'series',
+  tv = 'tv',
   movie = 'movie',
 }
