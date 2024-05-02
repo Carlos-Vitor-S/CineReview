@@ -1,10 +1,34 @@
 <div class="container" *ngFor="let production of productions">
-  <div class="imageContainer">
-    <iframe
-      width="420"
-      height="315"
-      src="https://www.youtube.com/embed/3FhlBkyEJkk"
-    >
-    </iframe>
+  <div class="productionHeader">
+    <span class="productionHeaderContent">{{
+      production.title || production.name
+    }}</span>
+  </div>
+  <div class="productionContainer">
+    <div class="imageContainer">
+      <img src="{{ production.backdrop_path }}" alt="" width="1000" />
+    </div>
+    <div class="productionContent">
+      <div class="ratingSection">
+        <span class="ratingContent">
+          <i class="pi pi-star-fill" style="color: var(--darkPrimaryColor)"></i
+          >{{ production.vote_average }}</span
+        >
+      </div>
+      <div class="trailerSection">
+        <span class="trailerSectionContent">
+          <div class="trailerSectionTitle">Ver Trailer</div>
+          <a [href]="trailerUrlSafe" target="_blank"
+            ><i class="pi pi-youtube"></i
+          ></a>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="productionDetailsContainer">
+    <span class="descriptionContent"> Sinopse: {{ production.overview }}</span>
+    <span class="descriptionContent"> Sinopse: {{ production.overview }}</span>
+    <span class="descriptionContent"> Sinopse: {{ production.overview }}</span>
+    <span class="descriptionContent"> Sinopse: {{ production.overview }}</span>
   </div>
 </div>

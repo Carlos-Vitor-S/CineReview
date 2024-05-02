@@ -23,8 +23,9 @@ export class CardComponent {
   ) {}
   //onClick event
   redirectToProduction(production: Production) {
-    this.router.navigate(['/production', production.id]);
-    this.productionDetailsService.productions$.next([production]);
+    this.productionDetailsService.clearLocalStorage();
+    this.productionDetailsService.addProduction(production);
+    this.router.navigate(['/production', production.id], { fragment: 'top' });
   }
   responsiveOptions = [
     {

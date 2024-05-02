@@ -3,6 +3,14 @@ import { ProductionDetailsService } from '../../../services/production-details.s
 import { Production } from '../../../interfaces/production';
 import { CommonModule } from '@angular/common';
 import { ImageModule } from 'primeng/image';
+import { ImdbService } from '../../../services/imdb.service';
+import { ProductionTypeEnum } from '../../../enums/productionsTypeEnum';
+import { environment } from '../../../environments/environment.development';
+import {
+  DomSanitizer,
+  SafeResourceUrl,
+  SafeUrl,
+} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-production-details',
@@ -12,19 +20,47 @@ import { ImageModule } from 'primeng/image';
   styleUrl: './production-details.component.scss',
 })
 export class ProductionDetailsComponent {
-  constructor(private productionDetailsService: ProductionDetailsService) {}
+  //productions: Production[] =
+  //this.productionDetailsService.productionsSubject.getValue();
 
-  productions: Production[] =
-    this.productionDetailsService.productions$.getValue();
+  productions: Production[] = [];
 
-  imageBackground =
-    'https://image.tmdb.org/t/p/original/hib8MpBPU7GdluS38htXCF4uw0c.jpg';
-
-  ngOnInit() {
-    this.getProductionDetails();
+  constructor(
+    private productionDetailsService: ProductionDetailsService,
+    private imdbService: ImdbService,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.productions = productionDetailsService.getProductions();
   }
 
+  trailerId: number = 0;
+  trailerUrlSafe?: SafeResourceUrl;
+  trailerUrl: string = '';
+  ngOnInit() {
+    //this.getProductionDetails();
+    //this.getSafeUrl();
+    this.getProductionDetails();
+    this.getTrailers();
+    //this.getService();
+  }
+
+  //Get data from card event click
   getProductionDetails() {
-    this.productionDetailsService.productions$.getValue();
+    this.productionDetailsService.productionsSubject.getValue().map((data) => {
+      return (this.trailerId = data.id);
+    });
+  }
+
+  getTrailers() {
+    if (this.trailerId != 0) {
+      this.imdbService
+        .getTrailers(this.trailerId, ProductionTypeEnum.tv)
+        .subscribe((trailerData) => {
+          this.trailerUrl = `${environment.trailerBaseUrl}${trailerData.results[0].key}`;
+          this.trailerUrlSafe =
+            this.domSanitizer.bypassSecurityTrustResourceUrl(this.trailerUrl);
+          console.log('sanitize: ', this.trailerUrlSafe);
+        });
+    }
   }
 }
