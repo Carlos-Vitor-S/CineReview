@@ -4,6 +4,7 @@
       production.title || production.name
     }}</span>
   </div>
+
   <div class="productionContainer">
     <div class="imageContainer">
       <img src="{{ production.backdrop_path }}" alt="" width="1000" />
@@ -26,9 +27,12 @@
     </div>
   </div>
   <div class="productionDetailsContainer">
-    <span class="descriptionContent"> Sinopse: {{ production.overview }}</span>
-    <span class="descriptionContent"> Sinopse: {{ production.overview }}</span>
-    <span class="descriptionContent"> Sinopse: {{ production.overview }}</span>
-    <span class="descriptionContent"> Sinopse: {{ production.overview }}</span>
+    <span class="descriptionContent">
+      <b>Sinopse:</b> {{ production.overview || notFoundMessage }}</span
+    >
+    <span class="descriptionContent">
+      <b>Data de Lançamento:</b>
+      {{ production.release_date || production.first_air_date }}</span
+    >
   </div>
 </div>

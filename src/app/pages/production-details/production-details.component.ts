@@ -20,11 +20,15 @@ import {
   styleUrl: './production-details.component.scss',
 })
 export class ProductionDetailsComponent {
-  //productions: Production[] =
-  //this.productionDetailsService.productionsSubject.getValue();
-
   productions: Production[] = [];
+  productionType: ProductionTypeEnum = ProductionTypeEnum.movie;
+  trailerId: number = 0;
+  trailerUrlSafe?: SafeResourceUrl;
+  trailerUrl: string = '';
+  notFoundMessage: string =
+    'A obra não ofereceu nenhuma sinopse sobre a produção';
 
+  //Construtor
   constructor(
     private productionDetailsService: ProductionDetailsService,
     private imdbService: ImdbService,
@@ -33,28 +37,27 @@ export class ProductionDetailsComponent {
     this.productions = productionDetailsService.getProductions();
   }
 
-  trailerId: number = 0;
-  trailerUrlSafe?: SafeResourceUrl;
-  trailerUrl: string = '';
   ngOnInit() {
-    //this.getProductionDetails();
-    //this.getSafeUrl();
     this.getProductionDetails();
     this.getTrailers();
-    //this.getService();
   }
 
   //Get data from card event click
   getProductionDetails() {
     this.productionDetailsService.productionsSubject.getValue().map((data) => {
-      return (this.trailerId = data.id);
+      data.name == null
+        ? (this.productionType = ProductionTypeEnum.movie)
+        : (this.productionType = ProductionTypeEnum.tv);
+
+      this.trailerId = data.id;
+      return this.productionType;
     });
   }
-
+  //get trailers by passing id
   getTrailers() {
     if (this.trailerId != 0) {
       this.imdbService
-        .getTrailers(this.trailerId, ProductionTypeEnum.tv)
+        .getTrailers(this.trailerId, this.productionType)
         .subscribe((trailerData) => {
           this.trailerUrl = `${environment.trailerBaseUrl}${trailerData.results[0].key}`;
           this.trailerUrlSafe =

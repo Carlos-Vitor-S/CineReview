@@ -50,10 +50,12 @@ export class HomeComponent {
           id: item.id,
           title: item.title,
           overview: item.overview,
+          original_name: item.original_name,
           poster_path: `${environment.posterBaseUrl}${item.poster_path}`,
           backdrop_path: `${environment.posterBaseUrl}${item.backdrop_path}`,
           vote_average: Number(item.vote_average.toFixed(1)),
           genre_ids: item.genre_ids,
+          release_date: item.release_date,
         });
       });
       console.log('Movies now Playing Theatres: ', this.moviesNowPlaying);
@@ -73,6 +75,7 @@ export class HomeComponent {
           vote_average: Number(item.vote_average.toFixed(1)),
           genre_ids: item.genre_ids,
           key: item.key,
+          first_air_date: item.first_air_date,
         });
       });
       console.log('Popular series: ', this.popularSeries);
@@ -91,6 +94,8 @@ export class HomeComponent {
           backdrop_path: `${environment.posterBaseUrl}${item.backdrop_path}`,
           vote_average: Number(item.vote_average.toFixed(1)),
           genre_ids: item.genre_ids,
+          release_date: item.release_date,
+          key: item.key,
         });
       });
       console.log('Trending Movies: ', this.trendingMovies);
