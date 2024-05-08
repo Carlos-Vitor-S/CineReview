@@ -46,8 +46,4 @@ export class CarouselComponent {
       numScroll: 1,
     },
   ];
-
-  clicar() {
-    console.log('clicou');
-  }
 }

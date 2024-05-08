@@ -1,0 +1,36 @@
+:host ::ng-deep .p-toolbar {
+  border: 0;
+  border-radius: 0;
+  background-color: var(--lightBackgroundColor);
+  padding: 0.8rem;
+}
+
+img:hover {
+  cursor: pointer;
+}
+.menuContainer {
+  margin-left: 1.2rem;
+}
+.menuItem {
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.menuItem:hover {
+  cursor: pointer;
+
+  text-decoration: underline;
+  transition: 0.2s ease-in-out;
+}
+
+.menuItem:not(:last-child) {
+  margin-right: 0.2rem;
+}
+
+.linkActive {
+  text-decoration: underline;
+}

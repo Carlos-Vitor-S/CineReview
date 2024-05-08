@@ -15,7 +15,7 @@ import { ProductionDetailsService } from '../../../services/production-details.s
 })
 export class CardComponent {
   @Input() productions: Production[] = [];
-  @Input() cardTitle: string = '';
+  @Input() cardTitle?: string = '';
 
   constructor(
     private router: Router,

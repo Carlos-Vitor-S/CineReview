@@ -1,0 +1,19 @@
+<div class="dataview" *ngIf="productionType === 'movie'">
+  <div class="headerContainer">
+    <span class="headerTitle">{{ productionTypeTitle }}</span>
+    <span></span>
+  </div>
+
+  <div class="card">
+    <app-grid-card [productions]="movies"></app-grid-card>
+  </div>
+</div>
+
+<div class="dataview" *ngIf="productionType === 'tv'">
+  <span class="headerContainer">
+    <span class="headerTitle">{{ productionTypeTitle }}</span>
+  </span>
+  <div class="card">
+    <app-grid-card [productions]="tv"></app-grid-card>
+  </div>
+</div>

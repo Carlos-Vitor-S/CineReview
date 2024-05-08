@@ -42,3 +42,9 @@
   cursor: pointer;
   transform: scale(1.1);
 }
+//carousel link background color
+:host ::ng-deep {
+  .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+    background-color: var(--darkPrimaryColor);
+  }
+}

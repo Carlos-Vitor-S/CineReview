@@ -1,0 +1,25 @@
+<p-toolbar class="toolbarContainer">
+  <div class="p-toolbar-group-left">
+    <img
+      src="/assets/logo/logoCineReviewSmall.png"
+      alt="CineReview"
+      (click)="goToHome()"
+    />
+    <div class="menuContainer">
+      <span (click)="redirectToMovies()" class="menuItem">Filmes</span>
+      <span class="menuItem" (click)="redirectToTv()">Series</span>
+    </div>
+  </div>
+
+  <div class="p-toolbar-group-right">
+    <div class="loginButtonAction">
+      <p-button
+        label="Entrar"
+        [raised]="true"
+        severity="warning"
+        class="loginButton"
+        size="small"
+      ></p-button>
+    </div>
+  </div>
+</p-toolbar>

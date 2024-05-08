@@ -1,0 +1,45 @@
+.headerContainer {
+  width: 100%;
+  font-weight: bold;
+  margin-left: 1rem;
+  padding: 1rem;
+}
+
+.headerTitle {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.avatarContainer {
+  margin-top: 0.8rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.imageContainer img {
+  border-radius: 0.8rem;
+}
+
+.avatarDescription {
+  display: flex;
+
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  padding: 0.2rem;
+  margin-top: 0.3rem;
+}
+
+.avatarName {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.avatarCharacter {
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-top: 0.1rem;
+}

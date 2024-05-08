@@ -1,0 +1,21 @@
+.card {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.headerContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 1rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-top: 0.3rem;
+  margin-left: 1rem;
+}
+
+.headerTitle {
+  border-bottom: 0.15rem solid var(--primaryColor);
+  padding-bottom: 0.3rem;
+}

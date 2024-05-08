@@ -2,9 +2,10 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
+
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +13,14 @@ import { CommonModule } from '@angular/common';
   imports: [
     RouterOutlet,
     HomeComponent,
-    NavbarComponent,
+
+    ToolbarComponent,
     ButtonModule,
     RouterLink,
     RouterLinkActive,
     CommonModule,
   ],
-
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
