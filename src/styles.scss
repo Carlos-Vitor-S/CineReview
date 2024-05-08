@@ -22,12 +22,12 @@ html {
   font-family: "Inter", sans-serif;
   background-color: var(--backgroundColor);
   color: white;
+  overflow-x: hidden;
 }
 
 :root {
   --primaryColor: #f26a1b;
   --darkPrimaryColor: #d95f18;
-
   --backgroundColor: #121212;
   --lightBackgroundColor: #18181c;
   --lighterBackgroundColor: #2a2a2d;

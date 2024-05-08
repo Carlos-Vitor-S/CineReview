@@ -1,31 +1,65 @@
 <div class="container" *ngFor="let production of productions">
   <div class="productionHeader">
-    <span class="productionHeaderContent">{{
+    <span class="productionHeaderTitle">{{
       production.title || production.name
     }}</span>
+    <div class="productionHeaderSubTitle">
+      {{ production.original_name || production.original_title }}
+    </div>
   </div>
 
-  <div class="productionContainer">
-    <div class="imageContainer">
-      <img src="{{ production.backdrop_path }}" alt="" width="1000" />
-    </div>
-    <div class="productionContent">
-      <div class="ratingSection">
-        <span class="ratingContent">
-          <i class="pi pi-star-fill" style="color: var(--darkPrimaryColor)"></i
-          >{{ production.vote_average }}</span
-        >
+  <div class="grid nested-grid p-3" *ngFor="let production of productions">
+    <div class="col-12 md:col-9 lg:col-9">
+      <div class="grid">
+        <div class="col-12 px-3">
+          <div class="text-center" id="imageContainer">
+            <img src="{{ production.backdrop_path }}" alt="" />
+          </div>
+        </div>
       </div>
-      <div class="trailerSection">
-        <span class="trailerSectionContent">
-          <div class="trailerSectionTitle">Ver Trailer</div>
-          <a [href]="trailerUrlSafe" target="_blank"
-            ><i class="pi pi-youtube"></i
-          ></a>
-        </span>
+    </div>
+    <div class="col-12 md:col-3 lg:col-3">
+      <div class="text-center h-full">
+        <div class="text-center h-full px-3" id="productionInfoContainer">
+          <div class="voteContainer">
+            <div class="voteContent">
+              <div class="voteTitle">Avaliação</div>
+              <!-- prettier-ignore -->
+              <div class="ratingContent"><i class="pi pi-star-fill" style="color: var(--darkPrimaryColor)"></i>{{ production.vote_average }}
+              </div>
+            </div>
+          </div>
+          <a [href]="trailerUrlSafe" target="_blank" class="trailerlink">
+            <div class="TrailerContainer">
+              <div class="voteContent">
+                <div class="voteTitle">Trailer</div>
+                <!-- prettier-ignore -->
+                <div class="trailerContent"><i class="pi pi-youtube" style="color: red"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
+  <div class="genreOuterContainer">
+    <div class="genreContainer" *ngFor="let genre of genres">
+      <span class="genreContent">
+        <button
+          pButton
+          type="button"
+          severity="warning"
+          size="small"
+          label="{{ genre.name }}"
+          [rounded]="true"
+          [raised]="true"
+          [outlined]="true"
+        ></button>
+      </span>
+    </div>
+  </div>
+
   <div class="productionDetailsContainer">
     <span class="descriptionContent">
       <b>Sinopse:</b> {{ production.overview || notFoundMessage }}</span
@@ -34,5 +68,18 @@
       <b>Data de Lançamento:</b>
       {{ production.release_date || production.first_air_date }}</span
     >
+    <span class="descriptionContent">
+      <b>Diretor(a):</b>
+      {{ directors }}</span
+    >
+    <span class="descriptionContent">
+      <b>Escritor(a):</b>
+      {{ writers }}</span
+    >
   </div>
+</div>
+
+<div class="castingContainer">
+  <app-avatar-card [casting]="casting" [cardTitle]="avatarCardTitle">
+  </app-avatar-card>
 </div>

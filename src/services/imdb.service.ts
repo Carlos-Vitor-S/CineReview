@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment.development';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Production } from '../interfaces/production';
 import { ProductionTypeEnum } from '../enums/productionsTypeEnum';
 import { Trailer } from '../interfaces/trailer';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Genre } from '../interfaces/genre';
+import { Casting } from '../interfaces/casting';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +48,7 @@ export class ImdbService {
       { headers: this.headers }
     );
   }
-
+  //get trailers of productions by id
   getTrailers(
     id: number,
     productionType: ProductionTypeEnum
@@ -57,11 +58,29 @@ export class ImdbService {
       { headers: this.headers }
     );
   }
-
-  getGenre(productionType: ProductionTypeEnum): Observable<Genre> {
-    return this.httpClient.get<Genre>(
+  //get productions genre list
+  getGenre(
+    productionType: ProductionTypeEnum
+  ): Observable<{ genres: Genre[] }> {
+    return this.httpClient.get<{ genres: Genre[] }>(
       `${environment.baseUrl}/genre/${productionType}/list?api_key=${environment.apiKey}&language=pt-BR`,
       { headers: this.headers }
     );
+  }
+
+  //get productions casting
+  // prettier-ignore
+  getCasting(productionType : ProductionTypeEnum , id : number) : Observable<  {cast: Casting[], crew : Casting[]}>{
+    return this.httpClient.get<{cast: Casting[], crew : Casting[]}>(
+      `${environment.baseUrl}/${productionType}/${id}/credits?api_key=${environment.apiKey}&language=pt-BR`,{ headers: this.headers }
+    )
+
+  }
+  // prettier-ignore
+
+  getProductionList(productionType : ProductionTypeEnum , page : number) : Observable<{results : Production[]}>{
+    return this.httpClient.get<{results : Production[]}>(
+      `${environment.baseUrl}/discover/${productionType}?api_key=${environment.apiKey}&language=pt-BR&page=${page}`,{ headers: this.headers }
+    )
   }
 }
