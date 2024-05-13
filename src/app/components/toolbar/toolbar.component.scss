@@ -3,22 +3,40 @@
   border-radius: 0;
   background-color: var(--lightBackgroundColor);
   padding: 0.8rem;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+//left side of toolbar
+
+.p-toolbar-group-left {
+  width: auto;
+}
+
+.p-toolbar-group-left img {
+  height: fit-content;
+  margin-right: 1.2rem;
+}
+
+@media screen and (max-width: 769px) {
+  .p-toolbar-group-left img {
+    width: 80px;
+    height: fit-content;
+  }
 }
 
 img:hover {
   cursor: pointer;
 }
-.menuContainer {
-  margin-left: 1.2rem;
-}
+
 .menuItem {
-  padding: 0.5rem;
-  border-radius: 0.4rem;
   font-size: 0.9rem;
+  padding: 0.3rem;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+
   flex-direction: row;
+  flex-wrap: nowrap;
 }
 .menuItem:hover {
   cursor: pointer;
@@ -33,4 +51,154 @@ img:hover {
 
 .linkActive {
   text-decoration: underline;
+}
+
+//search bar
+
+.p-toolbar-group-center {
+  width: 40%;
+}
+.searchBarContainer {
+  width: 100%;
+}
+//Search bar input and autocomplete
+:host ::ng-deep {
+  .p-autocomplete {
+    width: 100%;
+  }
+
+  .p-autocomplete input {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    border-color: slategray;
+
+    background-color: var(--lighterBackgroundColor);
+  }
+  .p-autocomplete input:focus {
+    box-shadow: none;
+    border-color: var(--darkPrimaryColor);
+    color: white;
+  }
+
+  .p-autocomplete input:not(:focus) {
+    box-shadow: none;
+    border-color: slategray;
+    color: white;
+  }
+
+  .p-autocomplete input:hover {
+    border-color: var(--darkPrimaryColor);
+    background-color: var(--hoverBackGroundColor);
+    transition: 0.3s ease-in-out;
+  }
+
+  .p-autocomplete input::placeholder {
+    color: white;
+  }
+
+  .p-autocomplete-panel {
+    background-color: var(--lighterBackgroundColor);
+    color: white;
+  }
+  .p-autocomplete-panel .p-autocomplete-item {
+    color: white;
+    border-bottom: 1px solid var(--darkPrimaryColor);
+    padding-bottom: 1rem;
+  }
+
+  .p-autocomplete-panel .p-autocomplete-item:hover {
+    background-color: var(--hoverBackGroundColor);
+  }
+
+  .p-autocomplete-dd .p-autocomplete-dropdown {
+    background-color: var(--hoverBackGroundColor);
+    border-color: slategray;
+    border-left: 0;
+    padding: 0;
+  }
+
+  .p-autocomplete-dd .p-autocomplete-dropdown:hover {
+    background-color: var(--darkPrimaryColor);
+    transition: 0.3s ease-in-out;
+  }
+}
+
+//right side
+
+.p-toolbar-group-right {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+//button
+
+:host ::ng-deep {
+  .loginButtonAction .p-button {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: 0.6rem;
+  }
+}
+
+.loginButtonAction {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding: 0.2rem;
+}
+
+.loginButtonAction .createAccount {
+  font-size: 0.9rem;
+  padding-right: 0.5rem;
+
+  padding: 0.5rem;
+  border-right: 1px solid var(--hoverBackGroundColor);
+}
+
+.loginButtonAction .createAccount:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: whitesmoke;
+  transition: 0.3s ease-in-out;
+}
+
+.mobileSearchContainer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+}
+
+#mobileSearchBarContainer {
+  position: relative;
+  display: inline-block;
+  transition: 0.4s ease;
+}
+
+.p-input-icon-right {
+  margin-top: 0.1rem;
+}
+
+.p-input-icon-right i {
+  font-size: 0.9rem;
+  color: white;
+}
+
+.p-input-icon-right i:hover {
+  cursor: pointer;
+}
+
+.size {
+  width: 100%;
+}
+
+.removerDiv {
+  display: none;
 }

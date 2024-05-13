@@ -1,20 +1,78 @@
 <p-toolbar class="toolbarContainer">
-  <div class="p-toolbar-group-left">
+  <div class="p-toolbar-group-left" *ngIf="hideLeftSide">
     <img
       src="/assets/logo/logoCineReviewSmall.png"
       alt="CineReview"
       (click)="goToHome()"
+      *ngIf="hideLeftSide"
     />
-    <div class="menuContainer">
+    <span class="menuContainer" *ngIf="hideLeftSide">
       <span (click)="redirectToMovies()" class="menuItem">Filmes</span>
       <span class="menuItem" (click)="redirectToTv()">Series</span>
+    </span>
+  </div>
+
+  <div class="p-toolbar-group-center" *ngIf="!isMobileScreen">
+    <div class="searchBarContainer">
+      <form [formGroup]="formGroupSearch">
+        <p-autoComplete
+          formControlName="searchResult"
+          [(ngModel)]="searchText"
+          [suggestions]="productionSuggestions"
+          (completeMethod)="getProductionsByQuery($event)"
+          field="title"
+          placeholder="Buscar titulo..."
+          [dropdown]="true"
+          dropdownIcon="pi pi-search"
+          (onSelect)="onItemSelect($event)"
+        >
+          <ng-template let-searchText pTemplate="item">
+            <span class="selectItemContainer">
+              {{ searchText.title || searchText.name }}
+            </span>
+          </ng-template>
+        </p-autoComplete>
+      </form>
     </div>
   </div>
 
-  <div class="p-toolbar-group-right">
+  <div class="p-toolbar-group-right" [style.width]="changeDivSize">
+    <div
+      class="searchBarContainer"
+      id="mobileSearchBarContainer"
+      *ngIf="isExpanded"
+    >
+      <form [formGroup]="formGroupSearch">
+        <p-autoComplete
+          class="autoCompleteMobile"
+          formControlName="searchResult"
+          [(ngModel)]="searchText"
+          [suggestions]="productionSuggestions"
+          (completeMethod)="getProductionsByQuery($event)"
+          field="title"
+          placeholder="Buscar titulo..."
+          (onSelect)="onItemSelect($event)"
+        >
+          <ng-template let-searchText pTemplate="item">
+            <span class="selectItemContainer">
+              {{ searchText.title || searchText.name }}
+            </span>
+          </ng-template>
+        </p-autoComplete>
+      </form>
+    </div>
+    <span
+      class="p-input-icon-right"
+      *ngIf="isMobileScreen"
+      (click)="toggleSearchBar()"
+    >
+      <i class="{{ changeAutoCompleteIcon }}"></i>
+    </span>
     <div class="loginButtonAction">
+      <div class="createAccount">Criar</div>
+
       <p-button
-        label="Entrar"
+        label="Login"
         [raised]="true"
         severity="warning"
         class="loginButton"
