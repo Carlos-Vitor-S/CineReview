@@ -7,13 +7,18 @@
   class="carousel"
 >
   <ng-template let-poster pTemplate="item">
-    <div class="posterContainer" (click)="redirectToProduction(poster)">
-      <img src="{{ poster.poster_path }}" alt="" />
-      <div class="ratingContainer">
-        <span class="ratingContent">
-          <i class="pi pi-star-fill" style="color: var(--darkPrimaryColor)"></i
-          >{{ poster.vote_average }}</span
-        >
+    <div class="containerCarousel">
+      <div class="posterContainer" (click)="redirectToProduction(poster)">
+        <img src="{{ poster.poster_path }}" alt="" />
+        <div class="ratingContainer">
+          <span class="ratingContent">
+            <i
+              class="pi pi-star-fill"
+              style="color: var(--darkPrimaryColor)"
+            ></i
+            >{{ poster.vote_average }}</span
+          >
+        </div>
       </div>
     </div>
   </ng-template>

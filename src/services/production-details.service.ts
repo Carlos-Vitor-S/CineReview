@@ -7,10 +7,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class ProductionDetailsService {
   productionsSubject = new BehaviorSubject<Production[]>([]);
+  searchProductionSubject = new BehaviorSubject<Production[]>([]);
   paginatorPage = new BehaviorSubject<number>(1);
 
   productionsChange$ = this.productionsSubject.asObservable();
   pageChange$ = this.paginatorPage.asObservable();
+  searchProduction$ = this.searchProductionSubject.asObservable();
 
   constructor() {
     this.loadProductions();
@@ -44,6 +46,12 @@ export class ProductionDetailsService {
 
   getPaginatorPage(pageNumber: number ) {
     this.paginatorPage.next(pageNumber)
-  
+   
+  }
+
+  //get search bar production data
+
+  getSearchBarData(production: Production[]) {
+    this.searchProductionSubject.next(production);
   }
 }

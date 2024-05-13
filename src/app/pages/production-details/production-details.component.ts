@@ -16,6 +16,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { Casting } from '../../../interfaces/casting';
 import { AvatarCardComponent } from '../../components/avatar-card/avatar-card.component';
 import { CastingTypeEnum } from '../../../enums/castingTypeEnum';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-production-details',
@@ -52,7 +53,9 @@ export class ProductionDetailsComponent {
   constructor(
     private productionDetailsService: ProductionDetailsService,
     private imdbService: ImdbService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.productions = productionDetailsService.getProductions();
   }
@@ -62,6 +65,7 @@ export class ProductionDetailsComponent {
     this.getTrailers();
     this.getCasting();
     this.getCrew();
+    this.getRoutingType();
   }
 
   //Get data from card event click
@@ -112,7 +116,7 @@ export class ProductionDetailsComponent {
         genreData.genres.map((item) => {});
       });
   }
-  //Get casting
+  //Get casting from production
   // prettier-ignore
   getCasting() {
     this.imdbService.getCasting(this.productionType , this.productionId).subscribe((data)=>{
@@ -149,15 +153,11 @@ export class ProductionDetailsComponent {
         console.log('Diretores: ', this.directors);
       });
   }
-  // prettier-ignore
-  getEmployees(){
-    this.imdbService.getCasting(ProductionTypeEnum.tv, this.productionId).subscribe((data)=>{
-      console.log("cast tv: ", data.cast )
-    })
-    this.imdbService.getCasting(ProductionTypeEnum.tv, this.productionId).subscribe((data)=>{
-      console.log("crew tv: ", data.crew)
-    })
 
-
+  getRoutingType() {
+    this.route.paramMap.subscribe((param) => {
+      param.get('id');
+      console.log(param.get('id'));
+    });
   }
 }

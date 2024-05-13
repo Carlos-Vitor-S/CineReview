@@ -10,6 +10,7 @@ import { environment } from '../../../environments/environment.development';
 import { TimeWindowEnum } from '../../../enums/timeWindowEnum';
 import { ProductionTypeEnum } from '../../../enums/productionsTypeEnum';
 import { Genre } from '../../../interfaces/genre';
+import { SpinnerComponent } from '../../components/spinner/spinner.component';
 
 // register Swiper custom elements
 register();
@@ -36,6 +37,9 @@ export class HomeComponent {
   genreList?: Genre;
 
   youtubeLink: string = '';
+
+  productionName: string = 'Django';
+
   ngOnInit() {
     this.getNowPlaying();
     this.getPopularSeries();

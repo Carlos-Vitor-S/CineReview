@@ -77,10 +77,17 @@ export class ImdbService {
 
   }
   // prettier-ignore
-
+  //get list of many productions
   getProductionList(productionType : ProductionTypeEnum , page : number) : Observable<{results : Production[]}>{
     return this.httpClient.get<{results : Production[]}>(
       `${environment.baseUrl}/discover/${productionType}?api_key=${environment.apiKey}&language=pt-BR&page=${page}`,{ headers: this.headers }
     )
   }
+  // prettier-ignore
+  getProductionByName(query : string) : Observable<{results : Production[]}>{
+    return this.httpClient.get<{results : Production[]}>(
+    `${environment.baseUrl}/search/multi?api_key=${environment.apiKey}&query=${query}&language=pt-BR`
+    )
+  }
+  // prettier-ignore
 }
