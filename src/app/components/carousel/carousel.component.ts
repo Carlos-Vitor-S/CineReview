@@ -25,14 +25,15 @@ export class CarouselComponent {
   redirectToProduction(production: Production) {
     this.productionDetailsService.clearLocalStorage();
     this.productionDetailsService.addProduction(production);
+
     this.router.navigate(['/production', production.id]);
   }
   //carrousel responsive options
   responsiveOptions = [
     {
       breakpoint: '1024px',
-      numVisible: 3,
-      numScroll: 3,
+      numVisible: 4,
+      numScroll: 4,
     },
 
     {

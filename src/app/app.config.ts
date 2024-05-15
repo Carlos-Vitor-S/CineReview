@@ -12,6 +12,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
       routes,
+
       withRouterConfig({
         onSameUrlNavigation: 'reload',
       }),

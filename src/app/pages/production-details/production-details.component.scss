@@ -1,3 +1,4 @@
+//Page container
 .container {
   width: 100%;
   background-color: var(--degradeBackgroundColor);
@@ -135,7 +136,7 @@ img {
   margin-bottom: 0.5rem;
 }
 
-//Description area
+//Production info Description area
 .productionDetailsContainer {
   width: 100%;
   display: flex;
@@ -220,9 +221,6 @@ img {
   background-color: var(--lighterBackgroundColor);
 }
 
-.trailerContent {
-}
-
 @media screen and (max-width: 769px) {
   #productionInfoContainer {
     display: grid;
@@ -258,4 +256,29 @@ img {
 
 .castingContainer {
   margin-top: 2rem;
+}
+
+//review or comment section
+
+.reviewSection {
+  margin-top: 5rem;
+  background-color: var(--lightBackgroundColor);
+  padding: 1rem;
+}
+
+.reviewContent {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.headerContainer {
+  border-color: red;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.headerTitle {
+  font-size: 1.3rem;
+  font-weight: bold;
 }

@@ -2,7 +2,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { ProductionTypeEnum } from '../../../enums/productionsTypeEnum';
 import { Subscription } from 'rxjs';
@@ -48,6 +48,7 @@ export class ToolbarComponent {
   hideLeftSide: boolean = true;
   changeDivSize: string = '';
   changeAutoCompleteIcon: string = 'pi pi-search';
+  isOnRoute: boolean = false;
   //search
   productionSuggestions: Production[] = [];
   searchText: string = '';
@@ -71,7 +72,7 @@ export class ToolbarComponent {
   }
 
   ngOnInit() {
-    this.getUrl();
+    this.checkCurrentUrl();
   }
 
   goToHome() {
@@ -126,18 +127,18 @@ export class ToolbarComponent {
     } 
   }
 
-  getUrl() {
-    console.log(this.router.url);
-    return this.router.url;
-  }
-
+  //search by name selector
   onItemSelect(event: any) {
+    const valueId = event.value.id;
     this.productionDetailsService.clearLocalStorage();
     this.productionDetailsService.addProduction(event.value);
-
-    //window.location.reload();
-
-    this.router.navigate(['/production', event.value.id]);
+    if (this.isOnRoute) {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/production', valueId]);
+      });
+    } else {
+      this.router.navigate(['/production', valueId]);
+    }
     this.searchText = '';
   }
   //changes toolbar based on mediascreen type
@@ -145,6 +146,16 @@ export class ToolbarComponent {
     this.isMobileScreen = window.innerWidth < 769;
   }
 
+  checkCurrentUrl() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (this.router.url.includes('production')) {
+          this.isOnRoute = true;
+        }
+      }
+    });
+  }
+  //icon activates search bar for smaller devices
   toggleSearchBar() {
     if (this.isMobileScreen) {
       this.isExpanded = !this.isExpanded;

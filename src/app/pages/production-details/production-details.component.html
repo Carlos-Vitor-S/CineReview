@@ -77,9 +77,20 @@
       {{ writers }}</span
     >
   </div>
-</div>
-
-<div class="castingContainer">
-  <app-avatar-card [casting]="casting" [cardTitle]="avatarCardTitle">
-  </app-avatar-card>
+  <div class="castingContainer">
+    <app-avatar-card [casting]="casting" [cardTitle]="avatarCardTitle">
+    </app-avatar-card>
+  </div>
+  <div class="reviewSection">
+    <div class="headerContainer">
+      <span class="headerTitle">Comentarios</span>
+    </div>
+    <div class="reviewContent">
+      <app-review></app-review>
+      <app-review></app-review>
+      <app-review></app-review>
+      <app-review></app-review>
+      <app-review></app-review>
+    </div>
+  </div>
 </div>

@@ -17,6 +17,7 @@ import { Casting } from '../../../interfaces/casting';
 import { AvatarCardComponent } from '../../components/avatar-card/avatar-card.component';
 import { CastingTypeEnum } from '../../../enums/castingTypeEnum';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ReviewComponent } from '../../components/review/review.component';
 
 @Component({
   selector: 'app-production-details',
@@ -29,6 +30,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     AvatarGroupModule,
     AvatarModule,
     AvatarCardComponent,
+    ReviewComponent,
   ],
   templateUrl: './production-details.component.html',
   styleUrl: './production-details.component.scss',
