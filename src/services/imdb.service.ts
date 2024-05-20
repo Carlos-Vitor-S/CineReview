@@ -8,6 +8,7 @@ import { Trailer } from '../interfaces/trailer';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Genre } from '../interfaces/genre';
 import { Casting } from '../interfaces/casting';
+import { Review } from '../interfaces/review';
 
 @Injectable({
   providedIn: 'root',
@@ -90,4 +91,9 @@ export class ImdbService {
     )
   }
   // prettier-ignore
+  getReviews(id : number, productionType : ProductionTypeEnum) : Observable<{results : Review[]}>{
+    return this.httpClient.get<{results : Review[]}>(
+      `${environment.baseUrl}/${productionType}/${id}/reviews?api_key=${environment.apiKey}`,{ headers: this.headers }
+    )
+  }
 }

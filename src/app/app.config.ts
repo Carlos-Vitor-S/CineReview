@@ -7,11 +7,16 @@ import {
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from '../environments/environment.development';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
       routes,
+
       withRouterConfig({
         onSameUrlNavigation: 'reload',
       }),
@@ -21,5 +26,9 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimations(),
     provideHttpClient(),
+    //firabase
+
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
   ],
 };

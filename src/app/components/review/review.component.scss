@@ -1,0 +1,63 @@
+.reviewContainer {
+  background-color: var();
+  border-radius: 0.9rem;
+  margin-bottom: 1.4rem;
+}
+
+//header input area
+
+.commentInfo {
+  margin-left: 0.4rem;
+  margin-bottom: 0.7rem;
+  display: flex;
+  align-items: center;
+}
+
+.commentAuthor {
+  margin-left: 0.3rem;
+}
+
+//input area
+:host ::ng-deep {
+  .p-inputtext {
+    width: 100%;
+    background-color: var(--hoverBackGroundColor);
+    color: white;
+    border: 1px solid slategray;
+  }
+  .p-inputtext:hover {
+    border: 1px solid var(--primaryColor);
+    transition: 0.2s ease-in-out;
+  }
+
+  .p-inputtext::placeholder {
+    color: white;
+    font-size: 0.9rem;
+  }
+
+  .p-inputtext.p-component:disabled {
+    opacity: unset;
+  }
+
+  .p-inputtext:focus {
+    border: 1px solid var(--primaryColor);
+    transition: 0.2s ease-in-out;
+    box-shadow: none;
+  }
+
+  .p-avatar {
+    background-color: var(--hoverBackGroundColor);
+    border-radius: 1rem;
+  }
+}
+
+.reviewContent {
+  background-color: var(--hoverBackGroundColor);
+  padding: 1.1rem;
+  margin-left: 0.2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 1rem;
+  border: 1px solid slategray;
+  font-size: 0.9rem;
+}

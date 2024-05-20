@@ -1,0 +1,10 @@
+<div class="reviewContainer" *ngFor="let review of reviews">
+  <div class="commentInfo">
+    <p-avatar icon="pi pi-user" class="avatar"></p-avatar>
+    <span class="commentAuthor">{{ review.author }}</span>
+  </div>
+
+  <div class="reviewContainer">
+    <div class="reviewContent">{{ review.content }}</div>
+  </div>
+</div>

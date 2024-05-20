@@ -1,1 +1,6 @@
-<p>Sign up</p>
+<h1>Cadastrar</h1>
+<form [formGroup]="formGroup" (ngSubmit)="formSubmit()">
+  <input type="text" pInputText formControlName="email" />
+  <input type="password" pInputText formControlName="password" />
+  <button type="submit">Cadastrar</button>
+</form>

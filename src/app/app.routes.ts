@@ -3,6 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { ProductionDetailsComponent } from './pages/production-details/production-details.component';
 import { ProductionListComponent } from './pages/production-list/production-list.component';
+import { LoginComponent } from './pages/login/login.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,4 +13,5 @@ export const routes: Routes = [
     path: 'productionList/:productionType',
     component: ProductionListComponent,
   },
+  { path: 'login', component: LoginComponent },
 ];

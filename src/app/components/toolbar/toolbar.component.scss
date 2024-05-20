@@ -22,6 +22,11 @@
   .p-toolbar-group-left img {
     width: 80px;
     height: fit-content;
+    margin-right: 0.2rem;
+  }
+
+  .menuContainer span {
+    font-size: 0.8rem;
   }
 }
 
@@ -127,7 +132,6 @@ img:hover {
 //right side
 
 .p-toolbar-group-right {
-  width: fit-content;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -199,6 +203,48 @@ img:hover {
   width: 100%;
 }
 
-.removerDiv {
-  display: none;
+//avatar
+
+:host ::ng-deep {
+  .avatar .p-avatar {
+    background-color: var(--hoverBackGroundColor);
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .avatar .p-avatar .pi {
+    font-size: 0.9rem;
+    color: white;
+  }
+  .avatar .p-avatar .pi:hover {
+    color: white;
+    transition: 0.2s ease-in-out;
+  }
+
+  //tiered panel
+  .p-tieredmenu {
+    background-color: var(--lighterBackgroundColor);
+    color: white;
+    width: 9rem;
+    margin-top: 1rem;
+  }
+  .p-tieredmenu .p-menuitem-text {
+    color: white;
+    font-size: 0.9rem;
+  }
+  .p-tieredmenu .p-menuitem-text:first-child {
+    color: white;
+  }
+
+  .p-tieredmenu .p-menuitem-icon {
+    color: white;
+  }
+
+  .p-tieredmenu .p-menuitem-link {
+    color: white;
+  }
+
+  .p-tieredmenu .p-menuitem-link:hover {
+    background-color: var(--hoverBackGroundColor);
+  }
 }

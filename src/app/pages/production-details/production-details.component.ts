@@ -17,6 +17,11 @@ import { Casting } from '../../../interfaces/casting';
 import { AvatarCardComponent } from '../../components/avatar-card/avatar-card.component';
 import { CastingTypeEnum } from '../../../enums/castingTypeEnum';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ReviewComponent } from '../../components/review/review.component';
+import { Review } from '../../../interfaces/review';
+
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-production-details',
@@ -29,6 +34,9 @@ import { ActivatedRoute, Router } from '@angular/router';
     AvatarGroupModule,
     AvatarModule,
     AvatarCardComponent,
+    ReviewComponent,
+    InputTextareaModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './production-details.component.html',
   styleUrl: './production-details.component.scss',
@@ -37,6 +45,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProductionDetailsComponent {
   productions: Production[] = [];
   casting: Casting[] = [];
+  reviews: Review[] = [];
+  genres: Genre[] = [];
   directors: string = '';
   writers: string = '';
   isImageFound: string = '';
@@ -47,7 +57,13 @@ export class ProductionDetailsComponent {
   trailerUrl: string = '';
   notFoundMessage: string =
     'A obra não ofereceu nenhuma sinopse sobre a produção';
-  genres: Genre[] = [];
+
+  isTyping: boolean = false;
+  textAreaText: string = '';
+
+  commentFormGroup = new FormGroup({
+    commentControl: new FormControl(''),
+  });
 
   //Construtor
   constructor(
@@ -66,6 +82,7 @@ export class ProductionDetailsComponent {
     this.getCasting();
     this.getCrew();
     this.getRoutingType();
+    this.getReviews();
   }
 
   //Get data from card event click
@@ -153,11 +170,38 @@ export class ProductionDetailsComponent {
         console.log('Diretores: ', this.directors);
       });
   }
-
+  //get routing param
   getRoutingType() {
     this.route.paramMap.subscribe((param) => {
       param.get('id');
       console.log(param.get('id'));
     });
+  }
+
+  //get reviews from api
+  // prettier-ignore
+  getReviews(){
+    this.imdbService.getReviews(this.productionId , this.productionType).subscribe((data)=>{
+     data.results.slice(0,3).map((item)=>
+        this.reviews.push({
+          author : item.author,
+          content : item.content,
+        })
+     )
+    })
+  }
+  //Comment buttons actions
+  toggleSubmit() {
+    this.isTyping = true;
+  }
+
+  CloseToggle() {
+    this.commentFormGroup.reset();
+    this.isTyping = false;
+  }
+
+  submitForm() {
+    console.log(this.commentFormGroup.value);
+    this.commentFormGroup.reset();
   }
 }

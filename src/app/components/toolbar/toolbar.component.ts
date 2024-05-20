@@ -2,21 +2,22 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { ProductionTypeEnum } from '../../../enums/productionsTypeEnum';
-import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { Production } from '../../../interfaces/production';
 import { ImdbService } from '../../../services/imdb.service';
 import { environment } from '../../../environments/environment.development';
-
-import { DividerModule } from 'primeng/divider';
-
+import { TieredMenu, TieredMenuModule } from 'primeng/tieredmenu';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ProductionDetailsService } from '../../../services/production-details.service';
+import { FirebaseService } from '../../../services/firebase.service';
+import { User } from 'firebase/auth';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 
 @Component({
   selector: 'app-toolbar',
@@ -30,7 +31,9 @@ import { ProductionDetailsService } from '../../../services/production-details.s
     InputTextModule,
     AutoCompleteModule,
     ReactiveFormsModule,
-    DividerModule,
+    AvatarModule,
+    AvatarGroupModule,
+    TieredMenuModule,
   ],
 
   templateUrl: './toolbar.component.html',
@@ -41,13 +44,17 @@ export class ToolbarComponent {
   movieType: ProductionTypeEnum = ProductionTypeEnum.movie;
   tvType: ProductionTypeEnum = ProductionTypeEnum.tv;
   productionParam: any;
+
   isMobileScreen: boolean = false;
   isExpanded: boolean = false;
   isAutocompleteOpen: boolean = false;
+  isOnRoute: boolean = false;
+  isUserLoggedIn?: User | null;
   screenSize: number = 0;
   hideLeftSide: boolean = true;
   changeDivSize: string = '';
   changeAutoCompleteIcon: string = 'pi pi-search';
+
   //search
   productionSuggestions: Production[] = [];
   searchText: string = '';
@@ -57,35 +64,42 @@ export class ToolbarComponent {
   formGroupSearch = new FormGroup({
     searchResult: new FormControl(''),
   });
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.checkScreenSize();
-  }
+
+  //logout popup
+  popUpItems = [{ label: 'Nome' }, { label: 'Sair', icon: 'pi pi-sign-out' }];
+
   constructor(
     private router: Router,
     private imdbService: ImdbService,
     private productionDetailsService: ProductionDetailsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private firebaseService: FirebaseService
   ) {
     this.checkScreenSize();
   }
 
-  ngOnInit() {
-    this.getUrl();
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
   }
 
+  ngOnInit() {
+    this.getCurrentUserStatus();
+    this.checkCurrentUrl();
+  }
+  //route to home
   goToHome() {
     this.router.navigate(['']);
   }
-
+  //route to movies
   redirectToMovies() {
     this.router.navigate(['/productionList', this.movieType]);
   }
-
+  //route to tv series
   redirectToTv() {
     this.router.navigate(['/productionList', this.tvType]);
   }
-
+  //get production by searched name
   getProductionByName(event: any) {
     this.searchText = event.query;
     console.log('search text: ', this.searchText);
@@ -126,18 +140,18 @@ export class ToolbarComponent {
     } 
   }
 
-  getUrl() {
-    console.log(this.router.url);
-    return this.router.url;
-  }
-
+  //search by name selector
   onItemSelect(event: any) {
+    const valueId = event.value.id;
     this.productionDetailsService.clearLocalStorage();
     this.productionDetailsService.addProduction(event.value);
-
-    //window.location.reload();
-
-    this.router.navigate(['/production', event.value.id]);
+    if (this.isOnRoute) {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/production', valueId]);
+      });
+    } else {
+      this.router.navigate(['/production', valueId]);
+    }
     this.searchText = '';
   }
   //changes toolbar based on mediascreen type
@@ -145,6 +159,16 @@ export class ToolbarComponent {
     this.isMobileScreen = window.innerWidth < 769;
   }
 
+  checkCurrentUrl() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (this.router.url.includes('production')) {
+          this.isOnRoute = true;
+        }
+      }
+    });
+  }
+  //icon activates search bar for smaller devices
   toggleSearchBar() {
     if (this.isMobileScreen) {
       this.isExpanded = !this.isExpanded;
@@ -154,5 +178,19 @@ export class ToolbarComponent {
         ? 'pi pi-times'
         : 'pi pi-search';
     }
+  }
+
+  //get current user status (if is logged in or not)
+  getCurrentUserStatus() {
+    this.firebaseService.getAuthStatus();
+    this.firebaseService.currentAuthStatus$.subscribe((authStatus) => {
+      this.isUserLoggedIn = authStatus;
+    });
+  }
+
+  //signOut action
+
+  signOut() {
+    this.firebaseService.signOut();
   }
 }
