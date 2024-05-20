@@ -282,3 +282,62 @@ img {
   font-size: 1.3rem;
   font-weight: bold;
 }
+
+//comment actions section
+
+.textAreaContainer {
+  margin-bottom: 1rem;
+}
+
+.buttonsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.2rem;
+  margin-top: 0.2rem;
+}
+
+.buttonsContainer .closeButton {
+  font-size: 0.8rem;
+}
+
+//input area
+:host ::ng-deep {
+  .p-inputtext {
+    width: 100%;
+    background-color: var(--lightBackgroundColor);
+    color: white;
+    border: none;
+  }
+
+  .p-inputtext::placeholder {
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid slategray;
+  }
+
+  .p-inputtext:focus {
+    transition: 0.2s ease-in-out;
+    box-shadow: none;
+    text-decoration: underline;
+  }
+
+  //button
+  .p-button {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: 0.3rem;
+  }
+  .closeButton .p-button {
+    background-color: transparent;
+    border: none;
+  }
+  .closeButton .p-button:hover {
+    background-color: var(--lighterBackgroundColor);
+    border: none;
+  }
+}

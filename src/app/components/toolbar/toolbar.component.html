@@ -69,16 +69,39 @@
     >
       <i class="{{ changeAutoCompleteIcon }}"></i>
     </span>
-    <div class="loginButtonAction">
-      <div class="createAccount">Criar</div>
-
+    <div class="loginButtonAction" *ngIf="isUserLoggedIn == null">
+      <div
+        class="createAccount"
+        [routerLink]="['/sign-up']"
+        routerLinkActive="router-link-active"
+      >
+        Criar
+      </div>
       <p-button
         label="Login"
         [raised]="true"
         severity="warning"
         class="loginButton"
         size="small"
+        [routerLink]="['/login']"
+        routerLinkActive="router-link-active"
       ></p-button>
+    </div>
+    <div *ngIf="isUserLoggedIn">
+      <span
+        class="card flex justify-content-center"
+        (mouseenter)="menu.toggle($event)"
+        (mouseleave)="menu.hide()"
+      >
+        <p-avatar icon="pi pi-user" class="avatar" shape="circle"></p-avatar>
+
+        <p-tieredMenu
+          #menu
+          [model]="popUpItems"
+          [popup]="true"
+          (click)="signOut()"
+        />
+      </span>
     </div>
   </div>
 </p-toolbar>

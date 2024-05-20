@@ -16,6 +16,8 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { ProgressSpinner } from 'primeng/progressspinner';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-root',
@@ -23,13 +25,13 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
   imports: [
     RouterOutlet,
     HomeComponent,
-
     ToolbarComponent,
     ButtonModule,
     RouterLink,
     RouterLinkActive,
     CommonModule,
     SpinnerComponent,
+    ProgressSpinnerModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.component.html',
@@ -37,29 +39,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 })
 export class AppComponent {
   title = 'app';
-  loading: boolean = false;
-  constructor(private router: Router) {
-    this.loading = true;
-    setTimeout(() => {
-      this.loading = false;
-    }, 2500);
-  }
 
-  ngOnInit() {
-    this.getSpinnerOnRoutes();
-  }
+  constructor(private router: Router) {}
 
-  getSpinnerOnRoutes() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.loading = true;
-      } else if (
-        event instanceof NavigationEnd ||
-        event instanceof NavigationCancel ||
-        event instanceof NavigationError
-      ) {
-        this.loading = false;
-      }
-    });
-  }
+  ngOnInit() {}
 }

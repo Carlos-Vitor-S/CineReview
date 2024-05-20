@@ -11,5 +11,5 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SpinnerComponent {
-  @Input() loading: boolean = false;
+  loading: boolean = false;
 }

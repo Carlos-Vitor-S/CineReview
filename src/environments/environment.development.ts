@@ -6,4 +6,14 @@ export const environment = {
   acessToken:
     'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZDc0Zjc1Mzk3ZTYxNzQxMzBjZTYzZTVmZmMyNmQ4YiIsInN1YiI6IjY2MTA4YTUwZGY4NmE4MDE2NDUyYjZiOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.SfK9bU-t6kePvlbPubLLYWSTcHnZvTQAp5dIQ4Haoxc',
   trailerBaseUrl: 'https://www.youtube.com/watch?v=',
+
+  //firabase
+  firebaseConfig: {
+    apiKey: 'AIzaSyD6FbtVvgxswXlBuQKjOGLk6UgUAM6h6WI',
+    authDomain: 'cinereview-225c0.firebaseapp.com',
+    projectId: 'cinereview-225c0',
+    storageBucket: 'cinereview-225c0.appspot.com',
+    messagingSenderId: '975975592643',
+    appId: '1:975975592643:web:a40a15367b390f0e266876',
+  },
 };

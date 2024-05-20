@@ -30,6 +30,15 @@
     transition: 0.2s ease-in-out;
   }
 
+  .p-inputtext::placeholder {
+    color: white;
+    font-size: 0.9rem;
+  }
+
+  .p-inputtext.p-component:disabled {
+    opacity: unset;
+  }
+
   .p-inputtext:focus {
     border: 1px solid var(--primaryColor);
     transition: 0.2s ease-in-out;
@@ -40,4 +49,15 @@
     background-color: var(--hoverBackGroundColor);
     border-radius: 1rem;
   }
+}
+
+.reviewContent {
+  background-color: var(--hoverBackGroundColor);
+  padding: 1.1rem;
+  margin-left: 0.2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 1rem;
+  border: 1px solid slategray;
+  font-size: 0.9rem;
 }

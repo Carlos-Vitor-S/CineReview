@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AvatarModule } from 'primeng/avatar';
+import { Review } from '../../../interfaces/review';
 
 @Component({
   selector: 'app-review',
@@ -12,4 +13,5 @@ import { AvatarModule } from 'primeng/avatar';
 })
 export class ReviewComponent {
   value!: string;
+  @Input() reviews: Review[] = [];
 }

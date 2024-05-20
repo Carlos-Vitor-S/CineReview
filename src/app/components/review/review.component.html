@@ -1,13 +1,10 @@
-<div class="reviewContainer">
+<div class="reviewContainer" *ngFor="let review of reviews">
   <div class="commentInfo">
     <p-avatar icon="pi pi-user" class="avatar"></p-avatar>
-    <span class="commentAuthor">Nome do Usuario</span>
+    <span class="commentAuthor">{{ review.author }}</span>
   </div>
 
-  <textarea
-    rows="5"
-    cols="30"
-    pInputTextarea
-    placeholder="Digite seu Comentario"
-  ></textarea>
+  <div class="reviewContainer">
+    <div class="reviewContent">{{ review.content }}</div>
+  </div>
 </div>

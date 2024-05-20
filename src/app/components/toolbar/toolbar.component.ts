@@ -5,18 +5,19 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { ProductionTypeEnum } from '../../../enums/productionsTypeEnum';
-import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { Production } from '../../../interfaces/production';
 import { ImdbService } from '../../../services/imdb.service';
 import { environment } from '../../../environments/environment.development';
-
-import { DividerModule } from 'primeng/divider';
-
+import { TieredMenu, TieredMenuModule } from 'primeng/tieredmenu';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ProductionDetailsService } from '../../../services/production-details.service';
+import { FirebaseService } from '../../../services/firebase.service';
+import { User } from 'firebase/auth';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 
 @Component({
   selector: 'app-toolbar',
@@ -30,7 +31,9 @@ import { ProductionDetailsService } from '../../../services/production-details.s
     InputTextModule,
     AutoCompleteModule,
     ReactiveFormsModule,
-    DividerModule,
+    AvatarModule,
+    AvatarGroupModule,
+    TieredMenuModule,
   ],
 
   templateUrl: './toolbar.component.html',
@@ -41,14 +44,17 @@ export class ToolbarComponent {
   movieType: ProductionTypeEnum = ProductionTypeEnum.movie;
   tvType: ProductionTypeEnum = ProductionTypeEnum.tv;
   productionParam: any;
+
   isMobileScreen: boolean = false;
   isExpanded: boolean = false;
   isAutocompleteOpen: boolean = false;
+  isOnRoute: boolean = false;
+  isUserLoggedIn?: User | null;
   screenSize: number = 0;
   hideLeftSide: boolean = true;
   changeDivSize: string = '';
   changeAutoCompleteIcon: string = 'pi pi-search';
-  isOnRoute: boolean = false;
+
   //search
   productionSuggestions: Production[] = [];
   searchText: string = '';
@@ -58,35 +64,42 @@ export class ToolbarComponent {
   formGroupSearch = new FormGroup({
     searchResult: new FormControl(''),
   });
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.checkScreenSize();
-  }
+
+  //logout popup
+  popUpItems = [{ label: 'Nome' }, { label: 'Sair', icon: 'pi pi-sign-out' }];
+
   constructor(
     private router: Router,
     private imdbService: ImdbService,
     private productionDetailsService: ProductionDetailsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private firebaseService: FirebaseService
   ) {
     this.checkScreenSize();
   }
 
-  ngOnInit() {
-    this.checkCurrentUrl();
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
   }
 
+  ngOnInit() {
+    this.getCurrentUserStatus();
+    this.checkCurrentUrl();
+  }
+  //route to home
   goToHome() {
     this.router.navigate(['']);
   }
-
+  //route to movies
   redirectToMovies() {
     this.router.navigate(['/productionList', this.movieType]);
   }
-
+  //route to tv series
   redirectToTv() {
     this.router.navigate(['/productionList', this.tvType]);
   }
-
+  //get production by searched name
   getProductionByName(event: any) {
     this.searchText = event.query;
     console.log('search text: ', this.searchText);
@@ -165,5 +178,19 @@ export class ToolbarComponent {
         ? 'pi pi-times'
         : 'pi pi-search';
     }
+  }
+
+  //get current user status (if is logged in or not)
+  getCurrentUserStatus() {
+    this.firebaseService.getAuthStatus();
+    this.firebaseService.currentAuthStatus$.subscribe((authStatus) => {
+      this.isUserLoggedIn = authStatus;
+    });
+  }
+
+  //signOut action
+
+  signOut() {
+    this.firebaseService.signOut();
   }
 }

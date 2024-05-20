@@ -85,12 +85,34 @@
     <div class="headerContainer">
       <span class="headerTitle">Comentarios</span>
     </div>
+
     <div class="reviewContent">
-      <app-review></app-review>
-      <app-review></app-review>
-      <app-review></app-review>
-      <app-review></app-review>
-      <app-review></app-review>
+      <div class="textAreaContainer">
+        <form [formGroup]="commentFormGroup" (ngSubmit)="submitForm()">
+          <textarea
+            pInputTextarea
+            placeholder="Deixe seu Comentario"
+            formControlName="commentControl"
+            (input)="toggleSubmit()"
+            [(ngModel)]="textAreaText"
+          ></textarea>
+
+          <span class="buttonsContainer" *ngIf="isTyping == true">
+            <p-button
+              label="Cancelar"
+              class="closeButton"
+              (click)="CloseToggle()"
+            />
+            <p-button
+              label="Comentar"
+              class="commentButton"
+              severity="warning"
+              type="submit"
+            />
+          </span>
+        </form>
+      </div>
+      <app-review [reviews]="reviews"></app-review>
     </div>
   </div>
 </div>
