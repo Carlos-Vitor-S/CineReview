@@ -83,7 +83,7 @@
   </div>
   <div class="reviewSection">
     <div class="headerContainer">
-      <span class="headerTitle">Comentarios</span>
+      <span class="headerTitle">Comentários</span>
     </div>
 
     <div class="reviewContent">
@@ -91,10 +91,12 @@
         <form [formGroup]="commentFormGroup" (ngSubmit)="submitForm()">
           <textarea
             pInputTextarea
-            placeholder="Deixe seu Comentario"
+            placeholder="Deixe seu Comentário..."
             formControlName="commentControl"
-            (input)="toggleSubmit()"
+            (click)="toggleSubmit()"
             [(ngModel)]="textAreaText"
+            [autoResize]="true"
+            rows="1"
           ></textarea>
 
           <span class="buttonsContainer" *ngIf="isTyping == true">

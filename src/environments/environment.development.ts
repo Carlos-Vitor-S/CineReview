@@ -11,6 +11,7 @@ export const environment = {
   firebaseConfig: {
     apiKey: 'AIzaSyD6FbtVvgxswXlBuQKjOGLk6UgUAM6h6WI',
     authDomain: 'cinereview-225c0.firebaseapp.com',
+    databaseURL: 'https://cinereview-225c0-default-rtdb.firebaseio.com',
     projectId: 'cinereview-225c0',
     storageBucket: 'cinereview-225c0.appspot.com',
     messagingSenderId: '975975592643',

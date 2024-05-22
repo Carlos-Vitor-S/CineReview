@@ -4,6 +4,7 @@ import { User } from '../../../interfaces/user';
 import { FirebaseService } from '../../../services/firebase.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -17,11 +18,12 @@ export class LoginComponent {
     password: new FormControl(''),
   });
 
-  ngOnInit() {
-    this.firebaseService.getUser();
-  }
+  ngOnInit() {}
 
-  constructor(private firebaseService: FirebaseService) {}
+  constructor(
+    private firebaseService: FirebaseService,
+    private router: Router
+  ) {}
 
   formSubmit() {
     this.formGroup.reset;
@@ -29,13 +31,12 @@ export class LoginComponent {
       let userData: User = Object.assign({} as User, this.formGroup.value);
       console.log(userData);
       this.loginWithEmail(userData);
-
-      console.log('logou');
+      this.router.navigate(['']);
     } else {
       console.log('erro');
     }
   }
-
+  //login with email and password
   loginWithEmail(userData: User) {
     this.firebaseService.loginWithEmail(userData.email, userData.password);
   }

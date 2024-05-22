@@ -16,7 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
-import { ProgressSpinner } from 'primeng/progressspinner';
+
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
