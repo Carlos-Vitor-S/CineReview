@@ -1,4 +1,9 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  inject,
+  OnInit,
+} from '@angular/core';
 import {
   NavigationCancel,
   NavigationEnd,
@@ -18,6 +23,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-root',
@@ -37,10 +43,13 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private fireabaseService: FirebaseService
+  ) {}
 
   ngOnInit() {}
 }

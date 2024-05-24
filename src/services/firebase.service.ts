@@ -3,11 +3,12 @@ import {
   Auth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signOut,
 } from '@angular/fire/auth';
 
-import { Firestore } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Review } from '../interfaces/review';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -15,10 +16,18 @@ export class FirebaseService {
   private auth = inject(Auth);
   private firestore = inject(Firestore);
 
+  private reviewCollection = collection(this.firestore, 'review');
+
   private authStatusSubject = new BehaviorSubject(this.auth.currentUser);
   currentAuthStatus$ = this.authStatusSubject.asObservable();
 
   constructor() {}
+
+  getReviews(): Observable<Review[]> {
+    return collectionData(this.reviewCollection, {
+      idField: 'id',
+    }) as Observable<Review[]>;
+  }
 
   signUpWithEmail(email: string, password: string) {
     return createUserWithEmailAndPassword(this.auth, email, password);

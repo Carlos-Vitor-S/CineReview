@@ -1,11 +1,62 @@
-<h1>Cadastrar</h1>
 <form [formGroup]="formGroup" (ngSubmit)="formSubmit()">
-  <input type="text" pInputText formControlName="email" placeholder="Email" />
-  <input
-    type="password"
-    pInputText
-    formControlName="password"
-    placeholder="Senha"
-  />
-  <button type="submit">Cadastrar</button>
+  <div class="formgrid grid">
+    <div class="gridContent grid">
+      <div class="field col-12 md:col-6">
+        <label for="firstname">Nome</label>
+        <input id="firstname" pInputText type="text" />
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="lastname">Sobrenome</label>
+        <input type="text" pInputText id="lastname" />
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="birthday">Data de Nascimento</label>
+        <p-calendar
+          [showIcon]="true"
+          inputId="buttondisplay"
+          [showOnFocus]="false"
+          id="birthday"
+        />
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="genero">Sexo</label>
+        <p-dropdown
+          [options]="genres"
+          [(ngModel)]="selectedGenre"
+          optionLabel="genero"
+        ></p-dropdown>
+      </div>
+
+      <div class="field col-12">
+        <label for="Email">Email</label>
+        <input id="Email" pInputText type="text" formControlName="email" />
+      </div>
+      <div class="field col-12">
+        <label for="password">Senha</label>
+        <p-password
+          id="password"
+          promptLabel="Senha"
+          weakLabel="Senha Fraca"
+          mediumLabel="Senha Média"
+          strongLabel="Senha Forte"
+          [toggleMask]="true"
+          placeholder="Senha"
+          formControlName="password"
+        />
+      </div>
+      <div class="field col-12">
+        <label for="password">Confirmar Senha</label>
+        <p-password
+          id="password"
+          promptLabel="Senha"
+          weakLabel="Senha Fraca"
+          mediumLabel="Senha Média"
+          strongLabel="Senha Forte"
+          [toggleMask]="true"
+          placeholder="Confirmar Senha"
+        />
+      </div>
+      <p-button label="Cadastrar" />
+    </div>
+  </div>
 </form>

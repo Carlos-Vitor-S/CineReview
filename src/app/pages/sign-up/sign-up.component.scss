@@ -1,0 +1,40 @@
+.formgrid {
+  width: 100%;
+  padding: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.gridContent {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--lighterBackgroundColor);
+}
+
+form {
+  width: 100%;
+}
+
+:host ::ng-deep {
+  .p-inputtext {
+    width: 100%;
+    box-shadow: none;
+    padding: 0.6rem;
+  }
+
+  .p-dropdown {
+    width: 100%;
+    padding: 0.1rem;
+    box-shadow: none;
+  }
+  .p-calendar {
+    width: 100%;
+    padding: 0;
+  }
+
+  .p-password {
+    width: 100%;
+  }
+}
