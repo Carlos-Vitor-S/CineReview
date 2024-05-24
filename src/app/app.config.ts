@@ -8,10 +8,11 @@ import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { AngularFireModule } from '@angular/fire/compat';
+
 import { environment } from '../environments/environment.development';
 import { getAuth, provideAuth } from '@angular/fire/auth';
-
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
@@ -30,5 +31,6 @@ export const appConfig: ApplicationConfig = {
 
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   ],
 };

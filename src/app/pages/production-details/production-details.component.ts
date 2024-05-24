@@ -22,6 +22,7 @@ import { Review } from '../../../interfaces/review';
 
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FirebaseService } from '../../../services/firebase.service';
 
 @Component({
   selector: 'app-production-details',
@@ -71,7 +72,8 @@ export class ProductionDetailsComponent {
     private imdbService: ImdbService,
     private domSanitizer: DomSanitizer,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private firebaseService: FirebaseService
   ) {
     this.productions = productionDetailsService.getProductions();
   }
@@ -83,6 +85,8 @@ export class ProductionDetailsComponent {
     this.getCrew();
     this.getRoutingType();
     this.getReviews();
+    this.getFirebaseReviews();
+    this.getCurrentUser();
   }
 
   //Get data from card event click
@@ -204,4 +208,22 @@ export class ProductionDetailsComponent {
     console.log(this.commentFormGroup.value);
     this.commentFormGroup.reset();
   }
+  //
+  fireStoreData: Review[] = [];
+  getFirebaseReviews() {
+    this.firebaseService.getReviews().subscribe((data) => {
+      console.log('Firebase: ', data);
+      data.map((item) => {
+        if (item.productionId === this.productionId) {
+          this.fireStoreData = data;
+        }
+      });
+    });
+  }
+
+  getCurrentUser() {
+    
+  }
+
+
 }
