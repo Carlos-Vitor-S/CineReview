@@ -47,6 +47,7 @@ export class ProductionDetailsComponent {
   productions: Production[] = [];
   casting: Casting[] = [];
   reviews: Review[] = [];
+  customReviews: Review[] = [];
   genres: Genre[] = [];
   directors: string = '';
   writers: string = '';
@@ -61,6 +62,7 @@ export class ProductionDetailsComponent {
 
   isTyping: boolean = false;
   textAreaText: string = '';
+  displayName: string = '';
 
   commentFormGroup = new FormGroup({
     commentControl: new FormControl(''),
@@ -84,9 +86,10 @@ export class ProductionDetailsComponent {
     this.getCasting();
     this.getCrew();
     this.getRoutingType();
+
     this.getReviews();
+    this.getDisplayName();
     this.getFirebaseReviews();
-    this.getCurrentUser();
   }
 
   //Get data from card event click
@@ -205,25 +208,45 @@ export class ProductionDetailsComponent {
   }
 
   submitForm() {
-    console.log(this.commentFormGroup.value);
-    this.commentFormGroup.reset();
+    this.firebaseService.currentAuthStatus$.subscribe((stats) => {
+      if (stats != null) {
+        let user: Review = {
+          author: this.displayName,
+          productionId: this.productionId,
+          content: this.commentFormGroup.value.commentControl!,
+        };
+
+        this.firebaseService.createFirestoreReview(user);
+        console.log('Formulario do review', user);
+        this.commentFormGroup.reset();
+      }
+    });
   }
-  //
+
   fireStoreData: Review[] = [];
   getFirebaseReviews() {
     this.firebaseService.getReviews().subscribe((data) => {
       console.log('Firebase: ', data);
+      this.fireStoreData = [];
       data.map((item) => {
         if (item.productionId === this.productionId) {
-          this.fireStoreData = data;
+          this.fireStoreData.push({
+            content: item.content,
+            author: item.author,
+            productionId: item.productionId,
+          });
         }
       });
     });
   }
 
-  getCurrentUser() {
-    
+  getDisplayName() {
+    this.firebaseService.currentId$.subscribe((id) => {
+      this.firebaseService.getUser(id).subscribe((item) => {
+        this.displayName = item.get('name');
+
+        console.log('Nome', this.displayName);
+      });
+    });
   }
-
-
 }

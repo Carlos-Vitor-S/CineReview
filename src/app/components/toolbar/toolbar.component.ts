@@ -12,7 +12,12 @@ import { Production } from '../../../interfaces/production';
 import { ImdbService } from '../../../services/imdb.service';
 import { environment } from '../../../environments/environment.development';
 import { TieredMenu, TieredMenuModule } from 'primeng/tieredmenu';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ProductionDetailsService } from '../../../services/production-details.service';
 import { FirebaseService } from '../../../services/firebase.service';
 import { User } from 'firebase/auth';
@@ -34,6 +39,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
     AvatarModule,
     AvatarGroupModule,
     TieredMenuModule,
+    FormsModule,
   ],
 
   templateUrl: './toolbar.component.html',
@@ -55,6 +61,11 @@ export class ToolbarComponent {
   changeDivSize: string = '';
   changeAutoCompleteIcon: string = 'pi pi-search';
 
+  displayName: string = '';
+  currentId: string = '';
+
+  toolBarOptions?: { option: string }[];
+  selectedToolBarOption?: { option: string } | null = null;
   //search
   productionSuggestions: Production[] = [];
   searchText: string = '';
@@ -66,7 +77,13 @@ export class ToolbarComponent {
   });
 
   //logout popup
-  popUpItems = [{ label: 'Nome' }, { label: 'Sair', icon: 'pi pi-sign-out' }];
+  popUpItems: { label: string; icon?: string }[] = [];
+
+  menuAction = [
+    { label: 'Series', command: () => this.redirectToTv() },
+    { label: 'Filmes', command: () => this.redirectToMovies() },
+    { label: 'Recomendação', command: () => this.redirectToRecommendations() },
+  ];
 
   constructor(
     private router: Router,
@@ -86,7 +103,27 @@ export class ToolbarComponent {
   ngOnInit() {
     this.getCurrentUserStatus();
     this.checkCurrentUrl();
+    this.toolBarOptions = [
+      { option: 'Filmes' },
+      { option: 'Series' },
+      { option: 'Recomendações' },
+    ];
+    this.getCurrentId();
+    this.getDisplayName();
   }
+
+  //
+  optionSelection(route: string) {
+    if (this.selectedToolBarOption?.option === 'Filmes') {
+      this.redirectToMovies();
+    } else if (this.selectedToolBarOption?.option === 'Series') {
+      this.redirectToTv();
+    } else if (this.selectedToolBarOption?.option === 'Recomendações') {
+      this.redirectToRecommendations();
+    }
+    this.selectedToolBarOption?.option == 'Selecione';
+  }
+
   //route to home
   goToHome() {
     this.router.navigate(['']);
@@ -98,6 +135,10 @@ export class ToolbarComponent {
   //route to tv series
   redirectToTv() {
     this.router.navigate(['/productionList', this.tvType]);
+  }
+
+  redirectToRecommendations() {
+    this.router.navigate(['/recommendation']);
   }
   //get production by searched name
   getProductionByName(event: any) {
@@ -192,5 +233,25 @@ export class ToolbarComponent {
 
   signOut() {
     this.firebaseService.signOut();
+  }
+
+  getCurrentId() {
+    this.firebaseService.currentId$.subscribe((id) => {
+      this.currentId = id;
+      console.log('id atual:', this.currentId);
+    });
+  }
+
+  getDisplayName() {
+    this.firebaseService.currentId$.subscribe((id) => {
+      this.firebaseService.getUser(id).subscribe((item) => {
+        this.displayName = item.get('name');
+        this.popUpItems = [
+          { label: this.displayName },
+          { label: 'Sair', icon: 'pi pi-sign-out' },
+        ];
+        console.log('Nome', this.displayName);
+      });
+    });
   }
 }

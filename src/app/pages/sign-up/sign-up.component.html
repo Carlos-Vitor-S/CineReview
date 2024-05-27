@@ -1,38 +1,64 @@
 <form [formGroup]="formGroup" (ngSubmit)="formSubmit()">
   <div class="formgrid grid">
     <div class="gridContent grid">
-      <div class="field col-12 md:col-6">
-        <label for="firstname">Nome</label>
-        <input id="firstname" pInputText type="text" />
+      <div class="col-12" id="headerContainer">
+        <span class="header">Crie Sua Conta</span>
       </div>
       <div class="field col-12 md:col-6">
-        <label for="lastname">Sobrenome</label>
-        <input type="text" pInputText id="lastname" />
-      </div>
-      <div class="field col-12 md:col-6">
-        <label for="birthday">Data de Nascimento</label>
-        <p-calendar
-          [showIcon]="true"
-          inputId="buttondisplay"
-          [showOnFocus]="false"
-          id="birthday"
+        <label for="firstname">* Nome</label>
+        <input
+          id="firstname"
+          pInputText
+          type="text"
+          placeholder="Nome"
+          formControlName="name"
         />
       </div>
       <div class="field col-12 md:col-6">
-        <label for="genero">Sexo</label>
+        <label for="lastname">* Sobrenome</label>
+        <input
+          type="text"
+          pInputText
+          id="lastname"
+          placeholder="Sobrenome"
+          formControlName="lastname"
+        />
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="birthday">* Data de Nascimento</label>
+        <p-calendar
+          [showIcon]="true"
+          inputId="buttondisplay"
+          [showOnFocus]="true"
+          id="birthday"
+          dateFormat="dd/mm/yy"
+          placeholder="Nascimento"
+          formControlName="birthday"
+        />
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="genero">* Sexo</label>
         <p-dropdown
           [options]="genres"
           [(ngModel)]="selectedGenre"
           optionLabel="genero"
+          placeholder="Selecione"
+          formControlName="gender"
         ></p-dropdown>
       </div>
 
       <div class="field col-12">
-        <label for="Email">Email</label>
-        <input id="Email" pInputText type="text" formControlName="email" />
+        <label for="Email">* Email</label>
+        <input
+          id="Email"
+          pInputText
+          type="text"
+          formControlName="email"
+          placeholder="Email"
+        />
       </div>
       <div class="field col-12">
-        <label for="password">Senha</label>
+        <label for="password">* Senha</label>
         <p-password
           id="password"
           promptLabel="Senha"
@@ -45,7 +71,7 @@
         />
       </div>
       <div class="field col-12">
-        <label for="password">Confirmar Senha</label>
+        <label for="password">* Confirmar Senha</label>
         <p-password
           id="password"
           promptLabel="Senha"
@@ -56,7 +82,17 @@
           placeholder="Confirmar Senha"
         />
       </div>
-      <p-button label="Cadastrar" />
+      <div class="buttonContainer">
+        <button
+          pButton
+          pRipple
+          label="Cadastrar"
+          severity="warning"
+          [raised]="true"
+          size="small"
+          type="submit"
+        ></button>
+      </div>
     </div>
   </div>
 </form>

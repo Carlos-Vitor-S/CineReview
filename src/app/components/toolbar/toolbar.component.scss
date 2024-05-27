@@ -8,6 +8,24 @@
 }
 
 //left side of toolbar
+.select {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  margin-right: 1rem;
+  font-weight: 400;
+}
+.select:hover {
+  background-color: var(--hoverBackGroundColor);
+  cursor: pointer;
+}
+
+.select i {
+  font-size: 0.7rem;
+  margin-left: 0.2rem;
+}
 
 .p-toolbar-group-left {
   width: auto;

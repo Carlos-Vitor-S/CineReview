@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -11,9 +11,9 @@ import { User } from '../../../interfaces/user';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { PasswordModule } from 'primeng/password';
-import { Genre } from '../../../interfaces/genre';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -35,14 +35,22 @@ import { ButtonModule } from 'primeng/button';
 export class SignUpComponent {
   genres?: { genero: string }[];
   selectedGenre?: { genero: string };
-
+  currentEmail: string = '';
+  currentUser: User[] = [];
   user?: User;
   formGroup = new FormGroup({
+    name: new FormControl(''),
+    lastname: new FormControl(''),
+    gender: new FormControl(''),
+    birthday: new FormControl(''),
     email: new FormControl(''),
     password: new FormControl(''),
   });
 
-  constructor(private firebaseService: FirebaseService) {}
+  constructor(
+    private firebaseService: FirebaseService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.genres = [
@@ -57,7 +65,10 @@ export class SignUpComponent {
       let userData: User = Object.assign({} as User, this.formGroup.value);
       console.log(userData);
       this.registerWithEmail(userData);
-      this.formGroup.reset;
+      this.createUser(userData);
+
+      this.router.navigate(['']);
+      this.formGroup.reset();
     }
   }
 
@@ -68,4 +79,12 @@ export class SignUpComponent {
       console.log('Deu erro: ', error);
     }
   }
+
+  createUser(user: User) {
+    this.firebaseService.createUserFireStore(user);
+  }
+
+  getCurrentEmail() {}
+
+  getUser() {}
 }

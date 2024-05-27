@@ -1,7 +1,154 @@
-.formContainer {
+.formgrid {
+  margin-top: 0.2rem;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gridContent {
+  width: 100%;
+  max-width: 450px;
+  padding: 1.2rem;
+
+  border-radius: 0.5rem;
+  background-color: var(--lighterBackgroundColor);
+}
+
+//header
+
+#headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+#headerContainer img {
+  height: fit-content;
+  background-color: red;
+}
+
+.header {
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: var(--lighterPrimaryColor);
+}
+
+//input field
+
+form {
+  width: 100%;
+}
+
+:host ::ng-deep {
+  .p-inputtext {
+    width: 100%;
+    box-shadow: none;
+    padding: 0.8rem;
+  }
+
+  .p-password {
+    width: 100%;
+  }
+
+  #button .p-button {
+    width: 100%;
+  }
+
+  #googleButton .p-button {
+    width: 100%;
+    color: white;
+    padding: 0.6rem;
+  }
+
+  .p-checkbox .p-checkbox-box {
+    padding: 0;
+    height: 19px;
+    width: 19px;
+    box-shadow: none;
+
+    border: none;
+    color: var(--primaryColor);
+  }
+  .p-checkbox .p-checkbox-box :hover {
+    border-color: var(--primaryColor);
+  }
+  .p-checkbox .p-checkbox-box:focus {
+    color: var(--primaryColor);
+  }
+  .p-checkbox .p-checkbox-box.p-highlight {
+    background-color: var(--primaryColor);
+  }
+}
+
+//remember
+
+.rememberContent {
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.rememberContent label {
+  margin-left: 0.1rem;
+}
+
+//button
+
+#googleButton {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+#button {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+//separator
+
+.separatorContainer {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+}
+
+.separatorContent {
+  font-size: 0.9rem;
+}
+
+.googleIcon {
+  width: 19px;
+  height: 19px;
+}
+
+#splitterContainer {
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.splitterLine {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  padding-top: 1.2rem;
+  border-top: 0.1px solid var(--darkPrimaryColor);
+}
+
+.splitterLine a {
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 0.2rem;
+  color: var(--primaryColor);
+}
+.splitterLine a:hover {
+  text-decoration: underline;
+  color: var(--lighterPrimaryColor);
 }

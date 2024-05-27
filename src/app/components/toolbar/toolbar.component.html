@@ -6,9 +6,16 @@
       (click)="goToHome()"
       *ngIf="hideLeftSide"
     />
-    <span class="menuContainer" *ngIf="hideLeftSide">
-      <span class="menuItem" (click)="redirectToMovies()">Filmes</span>
-      <span class="menuItem" (click)="redirectToTv()">Series</span>
+    <span class="menuContainer">
+      <span
+        class="card flex justify-content-center"
+        (mouseenter)="menu.toggle($event)"
+        (mouseleave)="menu.hide()"
+      >
+        <span class="select">Categorias <i class="pi pi-angle-down"></i></span>
+
+        <p-tieredMenu #menu [model]="menuAction" [popup]="true" />
+      </span>
     </span>
   </div>
 
