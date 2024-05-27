@@ -1,0 +1,189 @@
+<div class="container">
+  <p-stepper>
+    <p-stepperPanel>
+      <ng-template
+        pTemplate="header"
+        let-onClick="onClick"
+        let-index="index"
+        class="header"
+      >
+        <p-button icon="pi pi-user" size="small" severity="warning" />
+      </ng-template>
+
+      <ng-template
+        pTemplate="content"
+        let-nextCallback="nextCallback"
+        let-index="index"
+      >
+        <div class="sectionContainer">
+          <div class="sectionTitle">Me fale um pouco sobre seu humor hoje</div>
+          <div class="sectionContent">
+            1 - Que tipo de emoção voce gostaria de buscar em produções?
+            <div class="flex flex-wrap gap-1">
+              <div class="radioContainer">
+                <p-radioButton
+                  name="Rir"
+                  value="Rir"
+                  [(ngModel)]="selectedOption"
+                  inputId="Rir"
+                  (click)="onOptionSelected('Rir')"
+                />
+                <label for="Rir"> Rir </label>
+              </div>
+              <div class="radioContainer">
+                <p-radioButton
+                  name="Assustar"
+                  value="Assustar"
+                  [(ngModel)]="selectedOption"
+                  inputId="Assustar"
+                  (click)="onOptionSelected('Assustar')"
+                />
+                <label for="Assustar"> Assustar </label>
+              </div>
+              <div class="radioContainer">
+                <p-radioButton
+                  name="Emocionar"
+                  value="Emocionar"
+                  [(ngModel)]="selectedOption"
+                  inputId="Emocionar"
+                  (click)="onOptionSelected('Emocionar')"
+                />
+                <label for="Emocionar"> Emocionar </label>
+              </div>
+            </div>
+          </div>
+          <div class="sectionContent">
+            2 - Você está procurando por uma produção leve com personagens
+            carismáticos, ou prefere algo mais denso e sombrio
+            <div class="flex flex-wrap gap-2">
+              <div class="radioContainer">
+                <p-radioButton
+                  name="Leve ou carismático"
+                  value="Leve ou carismático"
+                  [(ngModel)]="selectedOption2"
+                  inputId="Leve ou carismático"
+                  (click)="onOption2Selected('Leve ou carismático')"
+                />
+                <label for="Leve ou carismático">Leve ou carismático </label>
+              </div>
+              <div class="radioContainer">
+                <p-radioButton
+                  name="Denso ou sombrio"
+                  value="Denso ou sombrio"
+                  [(ngModel)]="selectedOption2"
+                  inputId="Denso ou sombrio"
+                  (click)="onOption2Selected('Denso ou sombrio')"
+                />
+                <label for="Denso ou sombrio">Denso ou sombrio </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex pt-4 justify-content-end">
+          <p-button
+            label="Proximo"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            (onClick)="nextCallback.emit()"
+            size="small"
+            severity="warning"
+          />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+
+    <p-stepperPanel>
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <p-button icon="pi pi-video" severity="warning" size="small" />
+      </ng-template>
+      <ng-template
+        pTemplate="content"
+        let-prevCallback="prevCallback"
+        let-nextCallback="nextCallback"
+        let-index="index"
+      >
+        <div class="section2Container">
+          <div class="sectionTitle">
+            Você prefere experimentar filmes baseados em fatos reais ou
+            fictícios?
+          </div>
+          <div class="imageContainer">
+            <div class="imageContent">
+              <img
+                src="/assets/images/real.png"
+                alt=""
+                (click)="onClickImage('Reais')"
+                [ngClass]="{ selected: selectedImage === 'Reais' }"
+              />
+              <div class="description">Fatos reais</div>
+            </div>
+            <div class="imageContent">
+              <img
+                src="/assets/images/fiction.png"
+                alt=""
+                (click)="onClickImage('Ficção')"
+                [ngClass]="{ selected: selectedImage === 'Ficção' }"
+              />
+              <div class="description">Ficção</div>
+            </div>
+          </div>
+        </div>
+        <div class="flex pt-4 justify-content-between">
+          <p-button
+            label="Voltar"
+            icon="pi pi-arrow-left"
+            (onClick)="prevCallback.emit()"
+            severity="secondary"
+            size="small"
+          />
+          <p-button
+            label="Proximo"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            (onClick)="nextCallback.emit()"
+            severity="warning"
+            size="small"
+          />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel>
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <p-button icon="pi pi-check" size="small" severity="warning" />
+      </ng-template>
+      <ng-template
+        pTemplate="content"
+        let-prevCallback="prevCallback"
+        let-index="index"
+      >
+        <div class="section3">
+          <div class="section3Content">
+            <div class="descriptionSection">
+              Suas recomendações e opiniões serão exibidas na página inicial. Se
+              desejar confirmar, você poderá visualizá-las.
+            </div>
+            <div class="buttonContainer">
+              <p-button
+                label="Confirmar"
+                icon="pi pi-check"
+                (click)="getData()"
+                size="small"
+                severity="warning"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="flex pt-4 justify-content-start">
+          <p-button
+            label="Voltar"
+            icon="pi pi-arrow-left"
+            (onClick)="prevCallback.emit()"
+            severity="secondary"
+            size="small"
+          />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+  </p-stepper>
+</div>

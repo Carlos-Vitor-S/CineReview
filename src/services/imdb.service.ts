@@ -96,4 +96,17 @@ export class ImdbService {
       `${environment.baseUrl}/${productionType}/${id}/reviews?api_key=${environment.apiKey}`,{ headers: this.headers }
     )
   }
+
+  //get Recomendation movies
+  // prettier-ignore
+  getRecomendations(genre : string , keyword? :string) : Observable<{results : Production[]}>{
+   
+   let url =  `${environment.baseUrl}/discover/movie?api_key=${environment.apiKey}&language=pt-BR&with_genres=${genre}`
+    if(keyword){
+    url += `&with_keywords=${keyword}`
+   }
+    return this.httpClient.get<{results : Production[]}>(
+      url
+    )
+  }
 }

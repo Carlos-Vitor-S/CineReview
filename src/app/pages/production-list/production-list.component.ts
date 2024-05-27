@@ -11,8 +11,6 @@ import { Production } from '../../../interfaces/production';
 
 import { CommonModule } from '@angular/common';
 import { DataViewModule } from 'primeng/dataview';
-import { Observable, Subscription } from 'rxjs';
-import { CardComponent } from '../../components/card/card.component';
 import { environment } from '../../../environments/environment.development';
 import { GridCardComponent } from '../../components/grid-card/grid-card.component';
 import { ActivatedRoute } from '@angular/router';

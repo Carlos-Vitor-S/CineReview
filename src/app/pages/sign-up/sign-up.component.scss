@@ -1,20 +1,53 @@
-.formgrid {
-  width: 100%;
-  padding: 2rem;
+//form header
+#headerContainer {
+  display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.header {
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: var(--lighterPrimaryColor);
+}
+
+.formgrid {
+  padding: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
 }
 
 .gridContent {
   width: 100%;
   max-width: 600px;
-  padding: 1rem;
+  padding: 1.2rem;
+
   border-radius: 0.5rem;
   background-color: var(--lighterBackgroundColor);
 }
 
 form {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+.buttonContainer button {
+  width: 50%;
+  max-width: 1000px;
 }
 
 :host ::ng-deep {
@@ -24,14 +57,32 @@ form {
     padding: 0.6rem;
   }
 
+  .p-inputtext:hover {
+    border-color: var(--lighterPrimaryColor);
+  }
+
+  .p-inputtext :focus {
+    border-color: var(--lighterPrimaryColor);
+  }
+
   .p-dropdown {
     width: 100%;
-    padding: 0.1rem;
+    padding: 0;
     box-shadow: none;
   }
   .p-calendar {
     width: 100%;
     padding: 0;
+  }
+
+  .p-calendar:focus {
+    border-color: var(--lighterPrimaryColor);
+  }
+
+  .p-calendar-w-btn .p-datepicker-trigger {
+    background-color: var(--primaryColor);
+    padding: 0;
+    border: none;
   }
 
   .p-password {

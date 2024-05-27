@@ -14,5 +14,10 @@
       [cardTitle]="sectionCategory.category2"
     ></app-card>
   </div>
-  <app-spinner></app-spinner>
+  <div class="sectionContainer" *ngIf="isRecommended == true">
+    <app-card
+      [productions]="recommendations"
+      [cardTitle]="sectionCategory.category3"
+    ></app-card>
+  </div>
 </div>

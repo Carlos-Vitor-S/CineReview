@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Production } from '../interfaces/production';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Recommendation } from '../interfaces/recommendation';
 
 @Injectable({
   providedIn: 'root',
@@ -8,8 +9,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class ProductionDetailsService {
   productionsSubject = new BehaviorSubject<Production[]>([]);
   searchProductionSubject = new BehaviorSubject<Production[]>([]);
+  recommendationSubject = new BehaviorSubject<Recommendation[]>([]);
+
   paginatorPage = new BehaviorSubject<number>(1);
 
+  recommendation$ = this.recommendationSubject.asObservable();
   productionsChange$ = this.productionsSubject.asObservable();
   pageChange$ = this.paginatorPage.asObservable();
   searchProduction$ = this.searchProductionSubject.asObservable();
@@ -53,5 +57,10 @@ export class ProductionDetailsService {
 
   getSearchBarData(production: Production[]) {
     this.searchProductionSubject.next(production);
+  }
+
+  //get recommendation data
+  getRecommendationData(recomendation: Recommendation[]) {
+    this.recommendationSubject.next(recomendation);
   }
 }

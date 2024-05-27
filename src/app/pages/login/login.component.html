@@ -1,13 +1,78 @@
-<h1>Login</h1>
-<form [formGroup]="formGroup" (ngSubmit)="formSubmit()">
-  <div class="formContainer">
-    <input type="text" pInputText formControlName="email" placeholder="Email" />
-    <input
-      type="password"
-      pInputText
-      formControlName="password"
-      placeholder="Senha"
-    />
-    <p-button label="Primary" [rounded]="true" type="submit" />
+<div class="backgroundImage">
+  <div class="formgrid grid">
+    <div class="gridContent grid">
+      <div class="col-12" id="headerContainer">
+        <img
+          src="/assets/logo/logoCineReviewGray.png"
+          alt=""
+          width="200px
+
+        "
+        />
+      </div>
+      <form [formGroup]="formGroup" (ngSubmit)="formSubmit()">
+        <div class="field col-12">
+          <input
+            id="Email"
+            pInputText
+            type="text"
+            placeholder="Email"
+            formControlName="email"
+          />
+        </div>
+        <div class="field col-12">
+          <p-password
+            id="password"
+            [toggleMask]="true"
+            [feedback]="false"
+            placeholder="Senha"
+            formControlName="password"
+          />
+        </div>
+        <div class="field col-6" id="rememberContainer">
+          <span class="rememberContent">
+            <p-checkbox inputId="rememberPassword" [binary]="true" />
+            <label for="rememberPassword">Lembrar Senha</label>
+          </span>
+        </div>
+        <div class="field col-12" id="button">
+          <button
+            pButton
+            pRipple
+            label="Login"
+            severity="warning"
+            [raised]="true"
+            size="small"
+            type="submit"
+          ></button>
+        </div>
+      </form>
+      <div class="separatorContainer">
+        <span class="separatorContent">Ou</span>
+      </div>
+      <div class="field col-12" id="googleButton">
+        <button
+          pButton
+          pRipple
+          label="Continuar com Google"
+          [raised]="true"
+          size="small"
+          [outlined]="true"
+          severity="warning"
+        >
+          <img src="assets/googleIcon.png" alt="Google" class="googleIcon" />
+        </button>
+      </div>
+
+      <div class="field col-12" id="splitterContainer">
+        <span class="splitterLine"
+          >Não Possui Cadastro?<a
+            [routerLink]="['/sign-up']"
+            routerLinkActive="router-link-active"
+            >Crie sua conta</a
+          ></span
+        >
+      </div>
+    </div>
   </div>
-</form>
+</div>
