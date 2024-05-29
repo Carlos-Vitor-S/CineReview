@@ -15,7 +15,7 @@ import { PaginatorModule } from 'primeng/paginator';
 })
 export class GridCardComponent {
   @Input() productions: Production[] = [];
-
+  @Input() paginator: boolean = true;
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 120;

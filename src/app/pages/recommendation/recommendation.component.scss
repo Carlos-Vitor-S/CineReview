@@ -8,33 +8,55 @@
 }
 
 .sectionTitle {
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  //font-size: 1.4rem;
   color: white;
   font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1rem;
+  text-align: center;
 }
-
-.sectionContent {
-  margin-top: 1.3rem;
-  font-size: 1.1rem;
-  padding: 0.8rem;
-}
-
-.sectionContent label {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-}
-
-//Radio button
-
-.radioContainer {
+//section 1
+.grid {
+  margin: 1rem;
   display: flex;
   align-items: center;
-  margin-top: 0.8rem;
+  justify-content: center;
+}
+
+.grid img {
+  width: 100%;
+  padding: 0.5rem;
+  max-width: 250px;
+  border: 1px solid white;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  background-color: var(--hoverBackGroundColor);
+}
+
+.grid img:hover {
+  transition: 0.2s ease-in-out;
+  background-color: var(--lightHoverBackGroundColor);
+}
+.grid img.selected {
+  transition: 0.2s ease-out;
+  background-color: var(--lightHoverBackGroundColor);
+  outline: 1px solid white;
+}
+
+.emojiContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.emojiType {
+  margin-top: 0.2rem;
   font-size: 0.9rem;
+  font-weight: bold;
 }
 
 //
@@ -129,28 +151,48 @@
 
 //section 3
 
-.section3 {
-  height: 20rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.section3Content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  max-width: 900px;
-  width: 100%;
-}
-
-.descriptionSection {
-  font-size: 1.4rem;
-  font-weight: bold;
-}
-
 .buttonContainer {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonContainer .buttonContent:not(:last-child) {
+  margin-right: 0.6rem;
+}
+
+:host ::ng-deep {
+  .p-dialog {
+    width: 100%;
+    max-width: 500px;
+    color: white;
+  }
+  .p-dialog .p-dialog-header {
+    padding: 1.2rem;
+    color: var(--primaryColor);
+    background-color: var(--lightHoverBackGroundColor);
+  }
+  .p-dialog .p-dialog-content {
+    color: white;
+    background-color: var(--lightHoverBackGroundColor);
+  }
+
+  .p-dialog .p-dialog-header .p-dialog-header-icon {
+    color: var(--darkPrimaryColor);
+  }
+}
+
+.dialogBody {
+  font-size: 1rem;
+  padding: 0.2rem;
+  margin-bottom: 1rem;
+}
+
+.dialogButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  gap: 0.5rem;
 }

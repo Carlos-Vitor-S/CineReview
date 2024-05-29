@@ -16,66 +16,74 @@
         let-index="index"
       >
         <div class="sectionContainer">
-          <div class="sectionTitle">Me fale um pouco sobre seu humor hoje</div>
-          <div class="sectionContent">
-            1 - Que tipo de emoção voce gostaria de buscar em produções?
-            <div class="flex flex-wrap gap-1">
-              <div class="radioContainer">
-                <p-radioButton
-                  name="Rir"
-                  value="Rir"
-                  [(ngModel)]="selectedOption"
-                  inputId="Rir"
-                  (click)="onOptionSelected('Rir')"
-                />
-                <label for="Rir"> Rir </label>
-              </div>
-              <div class="radioContainer">
-                <p-radioButton
-                  name="Assustar"
-                  value="Assustar"
-                  [(ngModel)]="selectedOption"
-                  inputId="Assustar"
-                  (click)="onOptionSelected('Assustar')"
-                />
-                <label for="Assustar"> Assustar </label>
-              </div>
-              <div class="radioContainer">
-                <p-radioButton
-                  name="Emocionar"
-                  value="Emocionar"
-                  [(ngModel)]="selectedOption"
-                  inputId="Emocionar"
-                  (click)="onOptionSelected('Emocionar')"
-                />
-                <label for="Emocionar"> Emocionar </label>
-              </div>
+          <div class="sectionTitle">Qual seu humor hoje?</div>
+        </div>
+
+        <div class="grid">
+          <div class="col-3 lg:col-2">
+            <div class="firstRow emojiContent">
+              <img
+                src="/assets/emojis/feliz.svg"
+                alt="Happy Emoji"
+                (click)="onClickEmoji('feliz')"
+                [ngClass]="{ selected: selectedEmoji === 'feliz' }"
+              />
+              <div class="emojiType">Feliz</div>
             </div>
           </div>
-          <div class="sectionContent">
-            2 - Você está procurando por uma produção leve com personagens
-            carismáticos, ou prefere algo mais denso e sombrio
-            <div class="flex flex-wrap gap-2">
-              <div class="radioContainer">
-                <p-radioButton
-                  name="Leve ou carismático"
-                  value="Leve ou carismático"
-                  [(ngModel)]="selectedOption2"
-                  inputId="Leve ou carismático"
-                  (click)="onOption2Selected('Leve ou carismático')"
-                />
-                <label for="Leve ou carismático">Leve ou carismático </label>
-              </div>
-              <div class="radioContainer">
-                <p-radioButton
-                  name="Denso ou sombrio"
-                  value="Denso ou sombrio"
-                  [(ngModel)]="selectedOption2"
-                  inputId="Denso ou sombrio"
-                  (click)="onOption2Selected('Denso ou sombrio')"
-                />
-                <label for="Denso ou sombrio">Denso ou sombrio </label>
-              </div>
+          <div class="firstRow col-3 lg:col-2">
+            <div class="emojiContent">
+              <img
+                src="/assets/emojis/curioso.svg"
+                alt="mustache emoji"
+                (click)="onClickEmoji('curioso')"
+                [ngClass]="{ selected: selectedEmoji === 'curioso' }"
+              />
+              <div class="emojiType">Curioso</div>
+            </div>
+          </div>
+          <div class="firstRow col-3 lg:col-2">
+            <div class="emojiContent">
+              <img
+                src="/assets/emojis/tranquilo.svg"
+                alt="glasses emoji"
+                (click)="onClickEmoji('tranquilo')"
+                [ngClass]="{ selected: selectedEmoji === 'tranquilo' }"
+              />
+              <div class="emojiType">Tranquilo</div>
+            </div>
+          </div>
+          <div class="col-3 lg:col-2">
+            <div class="emojiContent">
+              <img
+                src="/assets/emojis/estressado.svg"
+                alt=""
+                (click)="onClickEmoji('estressado')"
+                [ngClass]="{ selected: selectedEmoji === 'estressado' }"
+              />
+              <div class="emojiType">Estressado</div>
+            </div>
+          </div>
+          <div class="col-3 lg:col-2">
+            <div class="emojiContent">
+              <img
+                src="/assets/emojis/triste.svg"
+                alt="sad emoji"
+                (click)="onClickEmoji('triste')"
+                [ngClass]="{ selected: selectedEmoji === 'triste' }"
+              />
+              <div class="emojiType">Triste</div>
+            </div>
+          </div>
+          <div class="col-3 lg:col-2">
+            <div class="emojiContent">
+              <img
+                src="/assets/emojis/cansado.svg"
+                alt="dead emoji"
+                (click)="onClickEmoji('cansado')"
+                [ngClass]="{ selected: selectedEmoji === 'cansado' }"
+              />
+              <div class="emojiType">Cansado</div>
             </div>
           </div>
         </div>
@@ -142,6 +150,7 @@
             icon="pi pi-arrow-right"
             iconPos="right"
             (onClick)="nextCallback.emit()"
+            (onClick)="showPreviewData()"
             severity="warning"
             size="small"
           />
@@ -158,20 +167,87 @@
         let-index="index"
       >
         <div class="section3">
-          <div class="section3Content">
-            <div class="descriptionSection">
-              Suas recomendações e opiniões serão exibidas na página inicial. Se
-              desejar confirmar, você poderá visualizá-las.
+          <div class="sectionTitle">
+            Aqui estão algumas recomendações de filmes. O que voce achou?
+          </div>
+          <app-grid-card
+            [productions]="recommendations"
+            [paginator]="false"
+          ></app-grid-card>
+          <div class="buttonContainer">
+            <div class="buttonContent">
+              <p-button
+                label="Não gostei"
+                icon="pi pi-thumbs-down"
+                size="small"
+                severity="warning"
+                [outlined]="true"
+                (click)="showDialog()"
+              />
             </div>
-            <div class="buttonContainer">
+            <div class="buttonContent">
+              <p-dialog
+                header="Mudança de Recomendações"
+                [modal]="true"
+                [(visible)]="visible"
+              >
+                <div class="dialogBody">
+                  Lamentamos que nossas sugestões não atenderam as suas
+                  especificações, mas podemos tentar novamente. Gostaria de ver
+                  <u>novas</u> sugestões de filmes?
+                </div>
+                <div class="dialogButtonContainer">
+                  <p-button
+                    label="Voltar"
+                    severity="secondary"
+                    (click)="visible = false"
+                    size="small"
+                    [raized]="true"
+                    icon="pi pi-arrow-left"
+                  />
+                  <p-button
+                    label="Confirmar"
+                    (click)="visible = false"
+                    size="small"
+                    [raized]="true"
+                    (click)="rerollMovies()"
+                    severity="warning"
+                    icon="pi pi-check"
+                  />
+                </div>
+              </p-dialog>
+            </div>
+            <div class="buttonContent">
               <p-button
                 label="Confirmar"
                 icon="pi pi-check"
-                (click)="getData()"
+                (click)="showDialog()"
                 size="small"
                 severity="warning"
+                [raized]="true"
               />
             </div>
+            <p-dialog
+              header="Obrigado pelas informações"
+              [modal]="true"
+              [(visible)]="visible"
+            >
+              <div class="dialogBody">
+                Suas recomendações personalizadas serão armazenadas e estarão
+                prontas para você na página inicial, sempre que desejar
+                acessá-las novamente no futuro."
+              </div>
+              <div class="dialogButtonContainer">
+                <p-button
+                  label="Entendi"
+                  (click)="getData()"
+                  size="small"
+                  [raized]="true"
+                  severity="warning"
+                  icon="pi pi-check"
+                />
+              </div>
+            </p-dialog>
           </div>
         </div>
         <div class="flex pt-4 justify-content-start">
