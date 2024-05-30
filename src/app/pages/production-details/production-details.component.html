@@ -106,12 +106,58 @@
               (click)="CloseToggle()"
             />
             <p-button
+              *ngIf="isUserLoggedIn == true"
               label="Comentar"
               class="commentButton"
               severity="warning"
               type="submit"
             />
+            <p-button
+              *ngIf="isUserLoggedIn == false"
+              label="Comentar"
+              class="commentButton"
+              severity="warning"
+              (click)="showDialog()"
+            />
           </span>
+          <p-dialog
+            header="Parece que voce ainda não fez login"
+            [(visible)]="isDialogVisible"
+            [modal]="true"
+          >
+            <div class="dialogBody">
+              <div class="dialogImage">
+                <img src="/assets/images/comment.png" alt="" width="10" />
+              </div>
+
+              Crie sua conta ou realize login para prossegui com a criação de
+              reviews das produções que voce mais gosta
+            </div>
+
+            <div class="splitterContainer">
+              <div class="loginRedirectContent">
+                <button
+                  pButton
+                  pRipple
+                  label="Login"
+                  severity="warning"
+                  [raised]="true"
+                  size="small"
+                  [routerLink]="['/login']"
+                  routerLinkActive="router-link-active"
+                  (click)="closeDialog()"
+                ></button>
+              </div>
+              <span class="splitterLine"
+                >Não Possui Cadastro?<a
+                  [routerLink]="['/sign-up']"
+                  routerLinkActive="router-link-active"
+                  (click)="closeDialog()"
+                  >Crie sua conta</a
+                ></span
+              >
+            </div>
+          </p-dialog>
         </form>
       </div>
       <app-review [reviews]="reviews"></app-review>

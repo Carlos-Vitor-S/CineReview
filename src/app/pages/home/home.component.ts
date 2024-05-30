@@ -14,6 +14,8 @@ import { SpinnerComponent } from '../../components/spinner/spinner.component';
 import { ProductionDetailsService } from '../../../services/production-details.service';
 import { Recommendation } from '../../../interfaces/recommendation';
 import { CommonModule } from '@angular/common';
+import { RecomendationsEnum } from '../../../enums/recomendationsEnum';
+import { GenresAndKeywordEnum } from '../../../enums/genresAndKeywordEnum';
 
 // register Swiper custom elements
 register();
@@ -37,14 +39,6 @@ export class HomeComponent {
     category3: `Recomendados`,
   };
 
-  moviesGenresAndKeywords = {
-    comedy: '35',
-    based_on_true_story: '9672',
-    horror: '27',
-    thriller: '53',
-    drama: '18',
-  };
-
   moviesNowPlaying: Production[] = [];
   popularSeries: Production[] = [];
   trendingMovies: Production[] = [];
@@ -63,6 +57,7 @@ export class HomeComponent {
     this.getTrendingMovies();
     this.getRecommendations();
   }
+  //map genres for recommendation
 
   //Get movies currently on theatres
   getNowPlaying() {
@@ -129,148 +124,11 @@ export class HomeComponent {
       if (recData != null) {
         recData.map((item) => {
           this.isRecommended = !this.isRecommended;
-          //First question radio
-
-          //Baseado em fatos reais
-          if (item.selectedImage === 'Reais') {
-            if (item.selectedOption === 'Rir') {
-              this.imdbService
-                .getRecomendations(
-                  this.moviesGenresAndKeywords.comedy,
-                  this.moviesGenresAndKeywords.based_on_true_story
-                )
-                .subscribe((data) => {
-                  data.results.slice(0, 6).map((item) => {
-                    this.recommendations.push({
-                      id: item.id,
-                      title: item.title,
-                      original_title: item.original_title,
-                      overview: item.overview,
-                      backdrop_path: `${environment.posterBaseUrl}${item.backdrop_path}`,
-                      vote_average: Number(item.vote_average.toFixed(1)),
-                      genre_ids: item.genre_ids,
-                      release_date: item.release_date,
-                      key: item.key,
-                    });
-                  });
-                });
+          this.productionDetailsService.recommendationProductions$.subscribe(
+            (data) => {
+              this.recommendations = data;
             }
-            if (item.selectedOption === 'Assustar') {
-              this.imdbService
-                .getRecomendations(
-                  this.moviesGenresAndKeywords.horror,
-                  this.moviesGenresAndKeywords.based_on_true_story
-                )
-                .subscribe((data) => {
-                  data.results.slice(0, 6).map((item) => {
-                    this.recommendations.push({
-                      id: item.id,
-                      title: item.title,
-                      original_title: item.original_title,
-                      overview: item.overview,
-                      backdrop_path: `${environment.posterBaseUrl}${item.backdrop_path}`,
-                      vote_average: Number(item.vote_average.toFixed(1)),
-                      genre_ids: item.genre_ids,
-                      release_date: item.release_date,
-                      key: item.key,
-                    });
-                  });
-                });
-              console.log(
-                'filmes Assustar baseados em reais: ',
-                this.recommendations
-              );
-            }
-            if (item.selectedOption === 'Emocionar') {
-              this.imdbService
-                .getRecomendations(
-                  this.moviesGenresAndKeywords.drama,
-                  this.moviesGenresAndKeywords.based_on_true_story
-                )
-                .subscribe((data) => {
-                  data.results.slice(0, 6).map((item) => {
-                    this.recommendations.push({
-                      id: item.id,
-                      title: item.title,
-                      original_title: item.original_title,
-                      overview: item.overview,
-                      backdrop_path: `${environment.posterBaseUrl}${item.backdrop_path}`,
-                      vote_average: Number(item.vote_average.toFixed(1)),
-                      genre_ids: item.genre_ids,
-                      release_date: item.release_date,
-                      key: item.key,
-                    });
-                  });
-                });
-              console.log(
-                'filmes Emocianar baseados em reais: ',
-                this.recommendations
-              );
-            }
-          }
-          //Normais
-          if (item.selectedImage === 'Ficção') {
-            if (item.selectedOption === 'Rir') {
-              this.imdbService
-                .getRecomendations(this.moviesGenresAndKeywords.comedy)
-                .subscribe((data) => {
-                  data.results.slice(14, 20).map((item) => {
-                    this.recommendations.push({
-                      id: item.id,
-                      title: item.title,
-                      original_title: item.original_title,
-                      overview: item.overview,
-                      backdrop_path: `${environment.posterBaseUrl}${item.backdrop_path}`,
-                      vote_average: Number(item.vote_average.toFixed(1)),
-                      genre_ids: item.genre_ids,
-                      release_date: item.release_date,
-                      key: item.key,
-                    });
-                  });
-                });
-              console.log('Comedia ficção: ', this.recommendations);
-            }
-            if (item.selectedOption === 'Assustar') {
-              this.imdbService
-                .getRecomendations(this.moviesGenresAndKeywords.horror)
-                .subscribe((data) => {
-                  data.results.slice(5, 11).map((item) => {
-                    this.recommendations.push({
-                      id: item.id,
-                      title: item.title,
-                      original_title: item.original_title,
-                      overview: item.overview,
-                      backdrop_path: `${environment.posterBaseUrl}${item.backdrop_path}`,
-                      vote_average: Number(item.vote_average.toFixed(1)),
-                      genre_ids: item.genre_ids,
-                      release_date: item.release_date,
-                      key: item.key,
-                    });
-                  });
-                });
-              console.log('Assustar: ', this.recommendations);
-            }
-            if (item.selectedOption === 'Emocionar') {
-              this.imdbService
-                .getRecomendations(this.moviesGenresAndKeywords.drama)
-                .subscribe((data) => {
-                  data.results.slice(14, 20).map((item) => {
-                    this.recommendations.push({
-                      id: item.id,
-                      title: item.title,
-                      original_title: item.original_title,
-                      overview: item.overview,
-                      backdrop_path: `${environment.posterBaseUrl}${item.backdrop_path}`,
-                      vote_average: Number(item.vote_average.toFixed(1)),
-                      genre_ids: item.genre_ids,
-                      release_date: item.release_date,
-                      key: item.key,
-                    });
-                  });
-                });
-              console.log('Emocionar: ', this.recommendations);
-            }
-          }
+          );
         });
       }
     });
