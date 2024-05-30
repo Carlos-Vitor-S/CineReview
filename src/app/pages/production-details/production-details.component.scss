@@ -349,3 +349,86 @@ img {
     border: none;
   }
 }
+
+:host ::ng-deep {
+  .p-dialog {
+    width: 100%;
+    max-width: 500px;
+    color: white;
+    margin: 1rem;
+  }
+  .p-dialog .p-dialog-header {
+    padding: 1.2rem;
+    color: var(--primaryColor);
+    background-color: var(--lightHoverBackGroundColor);
+  }
+  .p-dialog .p-dialog-content {
+    color: white;
+    background-color: var(--lightHoverBackGroundColor);
+  }
+
+  .p-dialog .p-dialog-header .p-dialog-header-icon {
+    color: var(--darkPrimaryColor);
+  }
+
+  .loginRedirectContent .p-button {
+    width: 100%;
+    border-radius: 0.4rem;
+    margin-left: 0;
+  }
+}
+
+.dialogBody {
+  font-size: 1rem;
+  padding: 0.2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.dialogImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialogImage img {
+  max-width: 300px;
+  width: 100%;
+  height: fit-content;
+}
+//button
+
+.loginRedirectContent {
+  width: 80%;
+  margin-bottom: 1rem;
+}
+
+.splitterContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.splitterLine {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  padding-top: 1rem;
+
+  border-top: 0.1px solid var(--darkPrimaryColor);
+}
+
+.splitterLine a {
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 0.2rem;
+  color: var(--primaryColor);
+}
+.splitterLine a:hover {
+  text-decoration: underline;
+  color: var(--lighterPrimaryColor);
+}

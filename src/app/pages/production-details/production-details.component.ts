@@ -16,9 +16,10 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { Casting } from '../../../interfaces/casting';
 import { AvatarCardComponent } from '../../components/avatar-card/avatar-card.component';
 import { CastingTypeEnum } from '../../../enums/castingTypeEnum';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, TitleStrategy } from '@angular/router';
 import { ReviewComponent } from '../../components/review/review.component';
 import { Review } from '../../../interfaces/review';
+import { DialogModule } from 'primeng/dialog';
 
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -38,6 +39,7 @@ import { FirebaseService } from '../../../services/firebase.service';
     ReviewComponent,
     InputTextareaModule,
     ReactiveFormsModule,
+    DialogModule,
   ],
   templateUrl: './production-details.component.html',
   styleUrl: './production-details.component.scss',
@@ -63,7 +65,8 @@ export class ProductionDetailsComponent {
   isTyping: boolean = false;
   textAreaText: string = '';
   displayName: string = '';
-
+  isUserLoggedIn: boolean = false;
+  isDialogVisible: boolean = false;
   commentFormGroup = new FormGroup({
     commentControl: new FormControl(''),
   });
@@ -86,10 +89,10 @@ export class ProductionDetailsComponent {
     this.getCasting();
     this.getCrew();
     this.getRoutingType();
-
     this.getReviews();
     this.getDisplayName();
     this.getFirebaseReviews();
+    this.getUserStatus();
   }
 
   //Get data from card event click
@@ -208,19 +211,19 @@ export class ProductionDetailsComponent {
   }
 
   submitForm() {
-    this.firebaseService.currentAuthStatus$.subscribe((stats) => {
-      if (stats != null) {
-        let user: Review = {
-          author: this.displayName,
-          productionId: this.productionId,
-          content: this.commentFormGroup.value.commentControl!,
-        };
+    if (this.isUserLoggedIn == true) {
+      let user: Review = {
+        author: this.displayName,
+        productionId: this.productionId,
+        content: this.commentFormGroup.value.commentControl!,
+      };
 
-        this.firebaseService.createFirestoreReview(user);
-        console.log('Formulario do review', user);
-        this.commentFormGroup.reset();
-      }
-    });
+      this.firebaseService.createFirestoreReview(user);
+      console.log('Formulario do review', user);
+      this.commentFormGroup.reset();
+    }
+    if (this.isUserLoggedIn == false) {
+    }
   }
 
   fireStoreData: Review[] = [];
@@ -238,6 +241,22 @@ export class ProductionDetailsComponent {
         }
       });
     });
+  }
+
+  getUserStatus() {
+    this.firebaseService.currentAuthStatus$.subscribe((stats) => {
+      stats != null
+        ? (this.isUserLoggedIn = true)
+        : (this.isUserLoggedIn = false);
+    });
+  }
+
+  showDialog() {
+    this.isDialogVisible = true;
+  }
+
+  closeDialog() {
+    this.isDialogVisible = false;
   }
 
   getDisplayName() {

@@ -48,7 +48,9 @@ export class RecommendationComponent {
   recommendations: Production[] = [];
   imagesData: Recommendation[] = [];
   productionsArray: Production[] = [];
-  visible: boolean = false;
+
+  visible1: boolean = false;
+  visible2: boolean = false;
 
   constructor(
     private router: Router,
@@ -75,16 +77,25 @@ export class RecommendationComponent {
     }
   }
 
-  showDialog() {
-    this.visible = true;
+  showDialog1() {
+    this.visible1 = true;
+    console.log('Show dialog 1: ', this.visible1);
+  }
+
+  showDialog2() {
+    this.visible2 = true;
+    console.log('Show dialog 2: ', this.visible1);
   }
 
   closeDialog() {
-    this.visible = false;
+    this.visible1 = false;
   }
 
   //confirm data and redirect
   getData() {
+    this.visible2 = false;
+    this.visible1 = false;
+
     this.imagesData = [
       {
         selectedEmoji: this.selectedEmoji,
@@ -92,10 +103,9 @@ export class RecommendationComponent {
       },
     ];
     this.productionDetailsService.getRecommendationArray(this.recommendations);
-    //this.productionDetailsService.getRecommendationData(this.imagesData);
+    this.productionDetailsService.getRecommendationData(this.imagesData);
 
-    console.log(this.visible);
-    this.router.navigate(['/']);
+    this.router.navigate(['/'], {});
   }
 
   navigateToHome() {

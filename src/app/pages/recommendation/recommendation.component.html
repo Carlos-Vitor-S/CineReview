@@ -31,7 +31,7 @@
               <div class="emojiType">Feliz</div>
             </div>
           </div>
-          <div class="firstRow col-3 lg:col-2">
+          <div class="col-3 lg:col-2">
             <div class="emojiContent">
               <img
                 src="/assets/emojis/curioso.svg"
@@ -42,7 +42,7 @@
               <div class="emojiType">Curioso</div>
             </div>
           </div>
-          <div class="firstRow col-3 lg:col-2">
+          <div class="col-3 lg:col-2">
             <div class="emojiContent">
               <img
                 src="/assets/emojis/tranquilo.svg"
@@ -53,17 +53,7 @@
               <div class="emojiType">Tranquilo</div>
             </div>
           </div>
-          <div class="col-3 lg:col-2">
-            <div class="emojiContent">
-              <img
-                src="/assets/emojis/estressado.svg"
-                alt=""
-                (click)="onClickEmoji('estressado')"
-                [ngClass]="{ selected: selectedEmoji === 'estressado' }"
-              />
-              <div class="emojiType">Estressado</div>
-            </div>
-          </div>
+
           <div class="col-3 lg:col-2">
             <div class="emojiContent">
               <img
@@ -84,6 +74,17 @@
                 [ngClass]="{ selected: selectedEmoji === 'cansado' }"
               />
               <div class="emojiType">Cansado</div>
+            </div>
+          </div>
+          <div class="col-3 lg:col-2">
+            <div class="emojiContent">
+              <img
+                src="/assets/emojis/estressado.svg"
+                alt=""
+                (click)="onClickEmoji('estressado')"
+                [ngClass]="{ selected: selectedEmoji === 'estressado' }"
+              />
+              <div class="emojiType">Estressado</div>
             </div>
           </div>
         </div>
@@ -182,14 +183,14 @@
                 size="small"
                 severity="warning"
                 [outlined]="true"
-                (click)="showDialog()"
+                (click)="showDialog1()"
               />
             </div>
             <div class="buttonContent">
               <p-dialog
                 header="Mudança de Recomendações"
                 [modal]="true"
-                [(visible)]="visible"
+                [(visible)]="visible1"
               >
                 <div class="dialogBody">
                   Lamentamos que nossas sugestões não atenderam as suas
@@ -200,14 +201,14 @@
                   <p-button
                     label="Voltar"
                     severity="secondary"
-                    (click)="visible = false"
+                    (click)="visible1 = false"
                     size="small"
                     [raized]="true"
                     icon="pi pi-arrow-left"
                   />
                   <p-button
                     label="Confirmar"
-                    (click)="visible = false"
+                    (click)="visible1 = false"
                     size="small"
                     [raized]="true"
                     (click)="rerollMovies()"
@@ -221,7 +222,7 @@
               <p-button
                 label="Confirmar"
                 icon="pi pi-check"
-                (click)="showDialog()"
+                (click)="showDialog2()"
                 size="small"
                 severity="warning"
                 [raized]="true"
@@ -229,13 +230,12 @@
             </div>
             <p-dialog
               header="Obrigado pelas informações"
-              [modal]="true"
-              [(visible)]="visible"
+              [(visible)]="visible2"
             >
               <div class="dialogBody">
                 Suas recomendações personalizadas serão armazenadas e estarão
                 prontas para você na página inicial, sempre que desejar
-                acessá-las novamente no futuro."
+                acessá-las novamente no futuro.
               </div>
               <div class="dialogButtonContainer">
                 <p-button
