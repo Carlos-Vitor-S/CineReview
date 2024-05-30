@@ -88,7 +88,43 @@
             </div>
           </div>
         </div>
+        <p-dialog
+          *ngIf="isUserLoggedIn == false"
+          header="Parece que voce ainda não fez login"
+          [(visible)]="isRedirectVisible"
+        >
+          <div class="dialogBody">
+            <div class="dialogImage">
+              <img src="/assets/images/comment.png" alt="" />
+            </div>
+            Crie sua conta ou realize login para prosseguir com a criação de
+            recomendações personalizadas.
+          </div>
 
+          <div class="splitterContainer">
+            <div class="loginRedirectContent">
+              <button
+                pButton
+                pRipple
+                label="Login"
+                severity="warning"
+                [raised]="true"
+                size="small"
+                [routerLink]="['/login']"
+                routerLinkActive="router-link-active"
+                (click)="closeRedirectDialog()"
+              ></button>
+            </div>
+            <span class="splitterLine"
+              >Não Possui Cadastro?<a
+                [routerLink]="['/sign-up']"
+                routerLinkActive="router-link-active"
+                (click)="closeRedirectDialog()"
+                >Crie sua conta</a
+              ></span
+            >
+          </div>
+        </p-dialog>
         <div class="flex pt-4 justify-content-end">
           <p-button
             label="Proximo"

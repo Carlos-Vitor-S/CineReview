@@ -22,7 +22,8 @@ import { RecomendationsEnum } from '../../../enums/recomendationsEnum';
 import { environment } from '../../../environments/environment.development';
 import { Production } from '../../../interfaces/production';
 import { DialogModule } from 'primeng/dialog';
-
+import { FirebaseService } from '../../../services/firebase.service';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-recommendation',
   standalone: true,
@@ -36,6 +37,7 @@ import { DialogModule } from 'primeng/dialog';
     ReactiveFormsModule,
     GridCardComponent,
     DialogModule,
+    RouterLink,
   ],
   templateUrl: './recommendation.component.html',
   styleUrl: './recommendation.component.scss',
@@ -54,26 +56,46 @@ export class RecommendationComponent {
   visible1: boolean = false;
   visible2: boolean = false;
   isDisabled: boolean = true;
-
+  isUserLoggedIn: boolean = false;
+  isRedirectVisible: boolean = false;
   constructor(
     private router: Router,
     private productionDetailsService: ProductionDetailsService,
-    private imdbService: ImdbService
+    private imdbService: ImdbService,
+    private firebaseService: FirebaseService
   ) {}
 
   ngOnInit() {
-    this.disableButton();
+    this.getUserStatus();
+  }
+  openRedirectDialog() {
+    this.isRedirectVisible = true;
+  }
+  closeRedirectDialog() {
+    this.isRedirectVisible = false;
   }
   //gets image value
   onClickImage(event: string) {
-    this.selectedImage = event;
-    console.log(this.selectedImage);
+    if (this.isUserLoggedIn == true) {
+      this.selectedImage = event;
+      console.log(this.selectedImage);
+    }
+    if (this.isUserLoggedIn == false) {
+      this.openRedirectDialog();
+    }
+
     this.disableButton();
   }
   //gets emoji value
   onClickEmoji(event: string) {
-    this.selectedEmoji = event;
-    console.log(this.selectedEmoji);
+    if (this.isUserLoggedIn == true) {
+      this.selectedEmoji = event;
+      console.log(this.selectedEmoji);
+    }
+    if (this.isUserLoggedIn == false) {
+      this.openRedirectDialog();
+    }
+
     this.disableButton();
   }
   //preview data
@@ -136,6 +158,14 @@ export class RecommendationComponent {
 
   removeArrayData() {
     this.allProductionsArray = [];
+  }
+
+  getUserStatus() {
+    this.firebaseService.currentAuthStatus$.subscribe((stats) => {
+      stats != null
+        ? (this.isUserLoggedIn = true)
+        : (this.isUserLoggedIn = false);
+    });
   }
 
   getRecommendations(page: number) {
