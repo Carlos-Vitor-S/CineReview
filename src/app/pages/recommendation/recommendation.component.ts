@@ -22,7 +22,8 @@ import { RecomendationsEnum } from '../../../enums/recomendationsEnum';
 import { environment } from '../../../environments/environment.development';
 import { Production } from '../../../interfaces/production';
 import { DialogModule } from 'primeng/dialog';
-
+import { FirebaseService } from '../../../services/firebase.service';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-recommendation',
   standalone: true,
@@ -36,6 +37,7 @@ import { DialogModule } from 'primeng/dialog';
     ReactiveFormsModule,
     GridCardComponent,
     DialogModule,
+    RouterLink,
   ],
   templateUrl: './recommendation.component.html',
   styleUrl: './recommendation.component.scss',
@@ -45,35 +47,68 @@ export class RecommendationComponent {
   selectedImage: string = '';
   selectedEmoji: string = '';
   pageNumber: number = 1;
+
   recommendations: Production[] = [];
   imagesData: Recommendation[] = [];
   productionsArray: Production[] = [];
+  allProductionsArray: Production[] = [];
 
   visible1: boolean = false;
   visible2: boolean = false;
-
+  isDisabled: boolean = true;
+  isUserLoggedIn: boolean = false;
+  isRedirectVisible: boolean = false;
   constructor(
     private router: Router,
     private productionDetailsService: ProductionDetailsService,
-    private imdbService: ImdbService
+    private imdbService: ImdbService,
+    private firebaseService: FirebaseService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getUserStatus();
+  }
+  openRedirectDialog() {
+    this.isRedirectVisible = true;
+  }
+  closeRedirectDialog() {
+    this.isRedirectVisible = false;
+  }
   //gets image value
   onClickImage(event: string) {
-    this.selectedImage = event;
-    console.log(this.selectedImage);
+    if (this.isUserLoggedIn == true) {
+      this.selectedImage = event;
+      console.log(this.selectedImage);
+    }
+    if (this.isUserLoggedIn == false) {
+      this.openRedirectDialog();
+    }
+
+    this.disableButton();
   }
   //gets emoji value
   onClickEmoji(event: string) {
-    this.selectedEmoji = event;
-    console.log(this.selectedEmoji);
+    if (this.isUserLoggedIn == true) {
+      this.selectedEmoji = event;
+      console.log(this.selectedEmoji);
+    }
+    if (this.isUserLoggedIn == false) {
+      this.openRedirectDialog();
+    }
+
+    this.disableButton();
   }
   //preview data
   showPreviewData() {
     if (this.selectedEmoji && this.selectedImage) {
       this.recommendations = [];
-      this.getRecommendations();
+      this.getRecommendations(1);
+    }
+  }
+
+  disableButton() {
+    if (this.selectedImage && this.selectedEmoji) {
+      this.isDisabled = false;
     }
   }
 
@@ -114,23 +149,49 @@ export class RecommendationComponent {
 
   rerollMovies() {
     this.recommendations = [];
-    this.getRecommendations();
+    this.getRecommendations(this.pageNumber);
+    if (this.pageNumber < 4) {
+      this.pageNumber++;
+    }
+    console.log(`Pagina ${this.pageNumber}`, this.allProductionsArray);
   }
-  getRecommendations() {
+
+  removeArrayData() {
+    this.allProductionsArray = [];
+  }
+
+  getUserStatus() {
+    this.firebaseService.currentAuthStatus$.subscribe((stats) => {
+      stats != null
+        ? (this.isUserLoggedIn = true)
+        : (this.isUserLoggedIn = false);
+    });
+  }
+
+  getRecommendations(page: number) {
     //Baseado em fatos reais
     if (this.selectedImage === RecomendationsEnum.baseadoEmFatosReais) {
       if (this.selectedEmoji === RecomendationsEnum.feliz) {
         this.imdbService
           .getRecomendations(
             GenresAndKeywordEnum.comedy,
+            page,
             GenresAndKeywordEnum.based_on_true_story
           )
           .subscribe((data) => {
-            const start = Math.floor(Math.random() * (data.results.length - 6));
+            if (page < 4) {
+              this.allProductionsArray = this.allProductionsArray.concat(
+                data.results
+              );
+            }
+
+            const start = Math.floor(
+              Math.random() * (this.allProductionsArray.length - 6)
+            );
             const end = start + 6;
             console.log('start', start);
             console.log('end', end);
-            data.results.slice(start, end).map((item) => {
+            this.allProductionsArray.slice(start, end).map((item) => {
               this.recommendations.push({
                 id: item.id,
                 title: item.title,
@@ -150,12 +211,20 @@ export class RecommendationComponent {
         this.imdbService
           .getRecomendations(
             `${GenresAndKeywordEnum.horror}|${GenresAndKeywordEnum.mystery}`,
+            page,
             GenresAndKeywordEnum.based_on_true_story
           )
           .subscribe((data) => {
-            const start = Math.floor(Math.random() * (data.results.length - 6));
+            if (page < 4) {
+              this.allProductionsArray = this.allProductionsArray.concat(
+                data.results
+              );
+            }
+            const start = Math.floor(
+              Math.random() * (this.allProductionsArray.length - 6)
+            );
             const end = start + 6;
-            data.results.slice(start, end).map((item) => {
+            this.allProductionsArray.slice(start, end).map((item) => {
               this.recommendations.push({
                 id: item.id,
                 title: item.title,
@@ -178,12 +247,21 @@ export class RecommendationComponent {
         this.imdbService
           .getRecomendations(
             GenresAndKeywordEnum.drama,
+
+            page,
             GenresAndKeywordEnum.based_on_true_story
           )
           .subscribe((data) => {
-            const start = Math.floor(Math.random() * (data.results.length - 6));
+            if (page < 4) {
+              this.allProductionsArray = this.allProductionsArray.concat(
+                data.results
+              );
+            }
+            const start = Math.floor(
+              Math.random() * (this.allProductionsArray.length - 6)
+            );
             const end = start + 6;
-            data.results.slice(start, end).map((item) => {
+            this.allProductionsArray.slice(start, end).map((item) => {
               this.recommendations.push({
                 id: item.id,
                 title: item.title,
@@ -206,12 +284,22 @@ export class RecommendationComponent {
         this.imdbService
           .getRecomendations(
             GenresAndKeywordEnum.action,
+
+            page,
             GenresAndKeywordEnum.based_on_true_story
           )
           .subscribe((data) => {
-            const start = Math.floor(Math.random() * (data.results.length - 6));
+            if (page < 4) {
+              this.allProductionsArray = this.allProductionsArray.concat(
+                data.results
+              );
+            }
+
+            const start = Math.floor(
+              Math.random() * (this.allProductionsArray.length - 6)
+            );
             const end = start + 6;
-            data.results.slice(start, end).map((item) => {
+            this.allProductionsArray.slice(start, end).map((item) => {
               this.recommendations.push({
                 id: item.id,
                 title: item.title,
@@ -234,12 +322,21 @@ export class RecommendationComponent {
         this.imdbService
           .getRecomendations(
             GenresAndKeywordEnum.comedy,
+
+            page,
             GenresAndKeywordEnum.based_on_true_story
           )
           .subscribe((data) => {
-            const start = Math.floor(Math.random() * (data.results.length - 6));
+            if (page < 4) {
+              this.allProductionsArray = this.allProductionsArray.concat(
+                data.results
+              );
+            }
+            const start = Math.floor(
+              Math.random() * (this.allProductionsArray.length - 6)
+            );
             const end = start + 6;
-            data.results.slice(start, end).map((item) => {
+            this.allProductionsArray.slice(start, end).map((item) => {
               this.recommendations.push({
                 id: item.id,
                 title: item.title,
@@ -262,12 +359,20 @@ export class RecommendationComponent {
         this.imdbService
           .getRecomendations(
             `${GenresAndKeywordEnum.scienceFiction}|${GenresAndKeywordEnum.adventure}`,
+            page,
             GenresAndKeywordEnum.based_on_true_story
           )
           .subscribe((data) => {
-            const start = Math.floor(Math.random() * (data.results.length - 6));
+            if (page < 4) {
+              this.allProductionsArray = this.allProductionsArray.concat(
+                data.results
+              );
+            }
+            const start = Math.floor(
+              Math.random() * (this.allProductionsArray.length - 6)
+            );
             const end = start + 6;
-            data.results.slice(start, end).map((item) => {
+            this.allProductionsArray.slice(start, end).map((item) => {
               this.recommendations.push({
                 id: item.id,
                 title: item.title,
@@ -291,11 +396,18 @@ export class RecommendationComponent {
     if (this.selectedImage === RecomendationsEnum.filmesFiccao) {
       if (this.selectedEmoji === RecomendationsEnum.feliz) {
         this.imdbService
-          .getRecomendations(GenresAndKeywordEnum.comedy)
+          .getRecomendations(GenresAndKeywordEnum.comedy, page)
           .subscribe((data) => {
-            const start = Math.floor(Math.random() * (data.results.length - 6));
+            if (page < 4) {
+              this.allProductionsArray = this.allProductionsArray.concat(
+                data.results
+              );
+            }
+            const start = Math.floor(
+              Math.random() * (this.allProductionsArray.length - 6)
+            );
             const end = start + 6;
-            data.results.slice(start, end).map((item) => {
+            this.allProductionsArray.slice(start, end).map((item) => {
               this.recommendations.push({
                 id: item.id,
                 title: item.title,
@@ -313,12 +425,20 @@ export class RecommendationComponent {
       if (this.selectedEmoji === RecomendationsEnum.curioso) {
         this.imdbService
           .getRecomendations(
-            `${GenresAndKeywordEnum.horror}|${GenresAndKeywordEnum.mystery}`
+            `${GenresAndKeywordEnum.horror}|${GenresAndKeywordEnum.mystery}`,
+            page
           )
           .subscribe((data) => {
-            const start = Math.floor(Math.random() * (data.results.length - 6));
+            if (page < 4) {
+              this.allProductionsArray = this.allProductionsArray.concat(
+                data.results
+              );
+            }
+            const start = Math.floor(
+              Math.random() * (this.allProductionsArray.length - 6)
+            );
             const end = start + 6;
-            data.results.slice(start, end).map((item) => {
+            this.allProductionsArray.slice(start, end).map((item) => {
               this.recommendations.push({
                 id: item.id,
                 title: item.title,
@@ -339,11 +459,18 @@ export class RecommendationComponent {
       }
       if (this.selectedEmoji === RecomendationsEnum.tranquilo) {
         this.imdbService
-          .getRecomendations(GenresAndKeywordEnum.drama)
+          .getRecomendations(GenresAndKeywordEnum.drama, page)
           .subscribe((data) => {
-            const start = Math.floor(Math.random() * (data.results.length - 6));
+            if (page < 4) {
+              this.allProductionsArray = this.allProductionsArray.concat(
+                data.results
+              );
+            }
+            const start = Math.floor(
+              Math.random() * (this.allProductionsArray.length - 6)
+            );
             const end = start + 6;
-            data.results.slice(start, end).map((item) => {
+            this.allProductionsArray.slice(start, end).map((item) => {
               this.recommendations.push({
                 id: item.id,
                 title: item.title,
@@ -364,11 +491,18 @@ export class RecommendationComponent {
       }
       if (this.selectedEmoji === RecomendationsEnum.estressado) {
         this.imdbService
-          .getRecomendations(GenresAndKeywordEnum.action)
+          .getRecomendations(GenresAndKeywordEnum.action, page)
           .subscribe((data) => {
-            const start = Math.floor(Math.random() * (data.results.length - 6));
+            if (page < 4) {
+              this.allProductionsArray = this.allProductionsArray.concat(
+                data.results
+              );
+            }
+            const start = Math.floor(
+              Math.random() * (this.allProductionsArray.length - 6)
+            );
             const end = start + 6;
-            data.results.slice(start, end).map((item) => {
+            this.allProductionsArray.slice(start, end).map((item) => {
               this.recommendations.push({
                 id: item.id,
                 title: item.title,
@@ -390,12 +524,20 @@ export class RecommendationComponent {
       if (this.selectedEmoji === RecomendationsEnum.triste) {
         this.imdbService
           .getRecomendations(
-            `${GenresAndKeywordEnum.comedy}|${GenresAndKeywordEnum.animation}`
+            `${GenresAndKeywordEnum.comedy}|${GenresAndKeywordEnum.animation}`,
+            page
           )
           .subscribe((data) => {
-            const start = Math.floor(Math.random() * (data.results.length - 6));
+            if (page < 4) {
+              this.allProductionsArray = this.allProductionsArray.concat(
+                data.results
+              );
+            }
+            const start = Math.floor(
+              Math.random() * (this.allProductionsArray.length - 6)
+            );
             const end = start + 6;
-            data.results.slice(start, end).map((item) => {
+            this.allProductionsArray.slice(start, end).map((item) => {
               this.recommendations.push({
                 id: item.id,
                 title: item.title,
@@ -417,12 +559,21 @@ export class RecommendationComponent {
       if (this.selectedEmoji === RecomendationsEnum.cansado) {
         this.imdbService
           .getRecomendations(
-            `${GenresAndKeywordEnum.scienceFiction}|${GenresAndKeywordEnum.fantasy}`
+            `${GenresAndKeywordEnum.scienceFiction}|${GenresAndKeywordEnum.fantasy}`,
+            page
           )
           .subscribe((data) => {
-            const start = Math.floor(Math.random() * (data.results.length - 6));
+            if (page < 4) {
+              this.allProductionsArray = this.allProductionsArray.concat(
+                data.results
+              );
+            }
+            const start = Math.floor(
+              Math.random() * (this.allProductionsArray.length - 6)
+            );
             const end = start + 6;
-            data.results.slice(start, end).map((item) => {
+
+            this.allProductionsArray.slice(start, end).map((item) => {
               this.recommendations.push({
                 id: item.id,
                 title: item.title,

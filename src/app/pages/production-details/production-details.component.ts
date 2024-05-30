@@ -222,8 +222,6 @@ export class ProductionDetailsComponent {
       console.log('Formulario do review', user);
       this.commentFormGroup.reset();
     }
-    if (this.isUserLoggedIn == false) {
-    }
   }
 
   fireStoreData: Review[] = [];
