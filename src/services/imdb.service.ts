@@ -99,9 +99,10 @@ export class ImdbService {
 
   //get Recomendation movies
   // prettier-ignore
-  getRecomendations(genre : string , keyword? :string) : Observable<{results : Production[]}>{
-   
-   let url =  `${environment.baseUrl}/discover/movie?api_key=${environment.apiKey}&language=pt-BR&with_genres=${genre}`
+  getRecomendations(genre : string , page? : number, keyword? :string ) : Observable<{results : Production[]}>{
+    page = 2
+    let pageNumber = page;
+   let url =  `${environment.baseUrl}/discover/movie?api_key=${environment.apiKey}&page=${page}&language=pt-BR&with_genres=${genre}`
     if(keyword){
     url += `&with_keywords=${keyword}`
    }
