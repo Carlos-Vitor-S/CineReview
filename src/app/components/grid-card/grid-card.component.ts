@@ -19,7 +19,7 @@ export class GridCardComponent {
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 120;
-
+  isSmallScreen: boolean = false;
   constructor(
     private router: Router,
     private productionDetailsService: ProductionDetailsService
