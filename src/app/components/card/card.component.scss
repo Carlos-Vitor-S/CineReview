@@ -6,14 +6,13 @@
   justify-content: flex-start;
   margin-right: 4rem;
   margin-left: 4rem;
-
-  font-size: 1.3rem;
-  font-weight: bold;
 }
 
 .headerTitle {
   border-bottom: 0.15rem solid var(--primaryColor);
   padding-bottom: 0.4rem;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: bold;
 }
 
 //carouselContainer

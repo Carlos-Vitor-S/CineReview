@@ -17,19 +17,11 @@ body,
 html {
   margin: 0;
   padding: 0;
-  height: 100vh;
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
   background-color: var(--backgroundColor);
   color: white;
   overflow-x: hidden;
-}
-
-@supports (height: 100dvh) {
-  body,
-  html {
-    height: 100dvh;
-  }
 }
 
 :root {

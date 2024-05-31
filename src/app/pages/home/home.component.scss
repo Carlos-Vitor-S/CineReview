@@ -7,3 +7,15 @@
   margin-bottom: 2rem;
   padding: 1rem;
 }
+
+@media screen and (max-width: 682px) {
+  .sectionContainer {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    margin-top: 0.5rem;
+    padding: 0;
+  }
+  .container {
+    padding: 0;
+  }
+}

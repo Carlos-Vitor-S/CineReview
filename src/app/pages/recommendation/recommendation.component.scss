@@ -8,7 +8,7 @@
 }
 
 .sectionTitle {
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-size: clamp(1.2rem, 2.5vw, 1.4rem);
   //font-size: 1.4rem;
   color: white;
   font-weight: bold;
@@ -20,16 +20,18 @@
 }
 //section 1
 .grid {
-  margin: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.col-3 {
+  padding: 0;
 }
 
 .grid img {
   width: 100%;
   padding: 0.5rem;
-  max-width: 250px;
+  max-width: 200px;
   border: 1px solid white;
   border-radius: 0.4rem;
   cursor: pointer;
@@ -44,6 +46,7 @@
   transition: 0.2s ease-out;
   background-color: var(--lightHoverBackGroundColor);
   outline: 1px solid white;
+  border-radius: 0.4rem;
 }
 
 .emojiContent {
@@ -189,7 +192,7 @@
 }
 
 .dialogBody {
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 0.2rem;
   margin-bottom: 1rem;
 }
