@@ -12,7 +12,7 @@
 .productionHeaderTitle {
   font-weight: bold;
 
-  font-size: clamp(1.5rem, 2.5vw, 3rem);
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
 }
 
 .productionHeaderSubTitle {
@@ -26,7 +26,6 @@
 
 img {
   width: 100%;
-  height: fit-content;
   border-radius: 0.9rem;
 }
 
@@ -42,7 +41,7 @@ img {
   padding: 1rem;
   border: 1px solid gray;
   border-radius: 0.3rem;
-  font-size: 1rem;
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
   margin-bottom: 1rem;
   background-color: var(--lighterBackgroundColor);
 }
@@ -54,10 +53,12 @@ img {
 }
 .voteContainer .ratingContent {
   font-size: 1.6rem;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
 }
 .voteContainer .ratingContent i {
   margin-right: 0.2rem;
   font-size: 1.4rem;
+  font-size: clamp(1.2rem, 2.5vw, 1.4rem);
 }
 
 .TrailerContainer {
@@ -79,6 +80,7 @@ img {
 
 .trailerContent i {
   font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
 }
 
 .trailerlink {
@@ -143,7 +145,7 @@ img {
   justify-content: center;
   flex-direction: column;
   padding: 0.5rem;
-
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
   padding-bottom: 2.5rem;
   background-color: var(--lighterBackgroundColor);
 }
@@ -176,7 +178,6 @@ img {
 
 img {
   width: 100%;
-  height: fit-content;
   border-radius: 0.9rem;
 }
 
@@ -184,44 +185,7 @@ img {
   padding: 1.5rem;
 }
 
-.voteContainer {
-  height: 48%;
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  border: 1px solid gray;
-  border-radius: 0.3rem;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  background-color: var(--lighterBackgroundColor);
-}
-
-.voteTitle {
-  padding: 0.3rem;
-  font-weight: bold;
-  font-size: 1.3rem;
-}
-.voteContainer .ratingContent {
-  font-size: 1.6rem;
-}
-.voteContainer .ratingContent i {
-  margin-right: 0.2rem;
-}
-
-.TrailerContainer {
-  height: 47%;
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  border: 1px solid gray;
-  border-radius: 0.3rem;
-  font-size: 1rem;
-  background-color: var(--lighterBackgroundColor);
-}
-
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 770px) {
   #productionInfoContainer {
     display: grid;
     align-items: center;
@@ -245,6 +209,7 @@ img {
     grid-column: 1;
     height: 100%;
     margin-bottom: 0;
+    font-size: 0.9rem;
   }
 
   .TrailerContainer {
@@ -394,7 +359,6 @@ img {
 .dialogImage img {
   max-width: 300px;
   width: 100%;
-  height: fit-content;
 }
 //button
 

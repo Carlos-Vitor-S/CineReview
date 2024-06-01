@@ -4,7 +4,7 @@
     (click)="redirectToProduction(production)"
     *ngFor="let production of productions"
   >
-    <img src="{{ production.backdrop_path }}" alt="" width="300" />
+    <img src="{{ production.backdrop_path }}" alt="" />
     <div class="ratingContainer">
       <span class="ratingContent">
         <i class="pi pi-star-fill" style="color: var(--darkPrimaryColor)"></i
@@ -13,6 +13,7 @@
     </div>
   </div>
 </div>
+
 <p-paginator
   *ngIf="paginator == true"
   (onPageChange)="onPageChange($event)"
